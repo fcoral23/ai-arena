@@ -600,7 +600,7 @@ function loadImg(imgEl, slot, onDone, onFail) {
     if (i >= exts.length) { onFail && onFail(); return; }
     imgEl.onload  = () => { onDone && onDone(imgEl); };
     imgEl.onerror = next;
-    imgEl.src = 'imagenes/equipo-' + slot + '.' + exts[i++];
+    imgEl.src = 'imagenes/Equipo-' + slot + '.' + exts[i++];
   }
   next();
 }
