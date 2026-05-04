@@ -530,6 +530,8 @@ function selectSlot(slot){
   nameEl.style.textShadow='0 0 20px '+ia.color+',0 0 6px '+ia.color;
   nameEl.classList.add('visible');
   document.getElementById('choose-text').style.opacity='0';
+  document.getElementById('ops-bar').style.opacity='1';
+document.getElementById('design-credit').style.opacity='1';
 
   /* highlight cards */
   document.querySelectorAll('.char-card').forEach(c=>{
@@ -573,6 +575,8 @@ function deselect(){
   document.getElementById('ai-name').classList.remove('visible');
   document.getElementById('ai-name').textContent='';
   document.getElementById('choose-text').style.opacity='1';
+  document.getElementById('ops-bar').style.opacity='0';
+document.getElementById('design-credit').style.opacity='0';
 
   /* reset cards */
   document.querySelectorAll('.char-card').forEach(c=>{
@@ -678,12 +682,15 @@ function renderCompetitors(){
 
   /* Operators bar */
   const op=DATA.operadores;
-  document.getElementById('ops-bar').innerHTML=
+document.getElementById('ops-bar').innerHTML=
     '<span class="ops-label">Operadores:</span>'+
     '<span>'+op.op1+', '+op.op2+' y '+op.op3+'</span>';
+document.getElementById('ops-bar').style.opacity='0';
+document.getElementById('ops-bar').style.transition='opacity .3s';
 
-  /* Design credit */
-  document.getElementById('design-credit').innerHTML='Diseño de personaje: <em>'+op.op3+'</em>';
+document.getElementById('design-credit').innerHTML='Diseño de personaje: <em>'+op.op3+'</em>';
+document.getElementById('design-credit').style.opacity='0';
+document.getElementById('design-credit').style.transition='opacity .3s';
 }
 
 /* ── Render leaderboard ── */
