@@ -197,34 +197,32 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 
 /* ── Center display — no box, natural image size ── */
 .center-display{
-  position:relative;
-  /* Width/height grow to fit whatever image is shown; no artificial limits */
-  flex-shrink:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-end;
-  overflow:visible;
-  z-index:5;
-  /* minimum so "Choose your AI" has room when nothing is selected */
-  min-width:140px;
-  min-height:200px;
+  position: relative;
+  height: 440px;        /* igual que max-height de la imagen */
+  min-width: 140px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: visible;
+  z-index: 5;
 }
 
 /* The actual character image — natural dimensions, no crop, no zoom */
 .center-char-img{
-  display:block;
-  /* natural size — JS will constrain only to keep it inside the viewport */
-  max-height:440px;   /* tallest comfortable height */
-  max-width:360px;    /* widest comfortable width   */
-  width:auto;
-  height:auto;
-  object-fit:contain;
-  opacity:0;
-  transition:opacity .75s ease;
-  pointer-events:none;
-  position:relative;
-  z-index:2;
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  max-height: 440px;
+  max-width: 360px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  opacity: 0;
+  transition: opacity .5s ease;
+  pointer-events: none;
+  z-index: 2;
 }
 .center-char-img.visible{opacity:1}
 
