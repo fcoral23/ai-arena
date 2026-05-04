@@ -376,7 +376,7 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
 
    ia: 'O' = ChatGPT (verde)  |  'A' = Claude (naranja)  |  'G' = Gemini (morado)
 
-   Imágenes de equipo → carpeta /imagenes/  (equipo-1.jpg / .png / .bmp / .gif)
+   Imágenes de equipo → carpeta /imagenes/  (Equipo-1.jpg / .png / .bmp / .gif)
    Orden de slots en la sección de personajes:
      Slots 1-4  → grupo ROBOT   (izquierda arriba)
      Slots 5-8  → grupo NATURE  (derecha arriba)
@@ -386,12 +386,12 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
 const DATA = {
 
   info: {
-    edition:    'Temporada 2025',
-    location:   'Ciudad de México, MX',
-    time:       'Viernes 8:00 PM',
+    edition:    '2026',
+    location:   'UMM',
+    time:       'Viernes 10:00 AM',
     organizer:  'AI Arena',
-    youtube:    'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    videoTitle: 'Highlights Oficiales'
+    youtube:    'https://youtu.be/APw1PvN3F7w?si=mv8TgtrHEnYad7Lz',
+    videoTitle: 'Promo'
   },
 
   descripcion: `
@@ -501,7 +501,7 @@ function loadImg(imgEl,slot,onLoad,onFail){
     if(i>=exts.length){onFail&&onFail();return}
     imgEl.onload=()=>{onLoad&&onLoad(imgEl)};
     imgEl.onerror=next;
-    imgEl.src='imagenes/equipo-'+slot+'.'+exts[i++];
+    imgEl.src='imagenes/Equipo-'+slot+'.'+exts[i++];
   }
   next();
 }
