@@ -143,8 +143,8 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   gap:0;position:relative;width:100%;
 }
 
-.arena-col-left{display:flex;flex-direction:column;gap:1.6rem;align-items:flex-end;padding-right:.3rem}
-.arena-col-right{display:flex;flex-direction:column;gap:1.6rem;align-items:flex-start;padding-left:.3rem}
+.arena-col-left{display:flex;flex-direction:column;gap:4.8rem;align-items:flex-end;padding-right:.3rem}
+.arena-col-right{display:flex;flex-direction:column;gap:4.8rem;align-items:flex-start;padding-left:.3rem}
 
 /* ── Diagonal card groups ── */
 .cat-group{display:flex;flex-direction:column;gap:.4rem}
@@ -253,7 +253,8 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 
 /* Design credit — bottom-right, below the image */
 .design-credit{
-  position:absolute;bottom:-1.5rem;right:0;
+  position:absolute;bottom:-1.5rem;left:50%;
+  transform:translateX(-50%);
   font-family:'Exo 2',sans-serif;font-style:italic;font-weight:300;
   font-size:.68rem;color:var(--text-muted);letter-spacing:.04em;
   white-space:nowrap;z-index:12;
