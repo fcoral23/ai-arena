@@ -175,22 +175,22 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 .arena-col-right .cards-row{transform:rotate( 8deg);transform-origin:center}
 
 .char-card{
-  width:50px;height:92px;
+  width:58px;height:105px;
   transform:skewX(-14deg);
   border:2px solid rgba(255,255,255,.08);
   border-radius:4px;overflow:hidden;
   cursor:pointer;position:relative;z-index:11;
   transition:transform .22s,border-color .22s,box-shadow .22s;
-  background:var(--bg-surface);
+  background-color:#000;
+  background-size:auto 105px;
+  background-repeat:no-repeat;
   margin-left:-10px;flex-shrink:0;
 }
 .char-card:first-child{margin-left:0}
-.char-card:nth-child(2){z-index:2}
-.char-card:nth-child(3){z-index:3}
-.char-card:nth-child(4){z-index:4}
+.char-card:nth-child(2){z-index:12}
+.char-card:nth-child(3){z-index:13}
+.char-card:nth-child(4){z-index:14}
 .char-card:hover{transform:skewX(-14deg) translateY(-10px) scale(1.08);z-index:20}
-
-/* RIGHT column — mirrored skew */
 .arena-col-right .char-card{transform:skewX(14deg)}
 .arena-col-right .char-card:hover{transform:skewX(14deg) translateY(-10px) scale(1.08)}
 
@@ -409,7 +409,7 @@ const DATA = {
 
   info: {
     edition:    '2026',
-    location:   'UMM',
+    location:   'UMM. Salón de juicios orales',
     time:       'Viernes 10:00 AM',
     organizer:  'AI Arena',
     youtube:    'https://youtu.be/APw1PvN3F7w?si=mv8TgtrHEnYad7Lz',
@@ -425,8 +425,7 @@ const DATA = {
 
   infoAdicional: `
     Los <strong>4 primeros lugares</strong> al final de la temporada regular clasifican a la
-    <strong>Gran Final</strong>, donde competirán en un reto de 48 horas en vivo. Las fechas, reglas
-    completas y criterios de evaluación están disponibles en el portal oficial.
+    <strong>Gran Final</strong>, donde competirán en un reto de 1 hora.
   `,
 
   operadores: {
@@ -439,11 +438,22 @@ const DATA = {
   numRetos: 3,
 
   categorias: [
-    { label: 'ROBOT',   slots: [1, 2, 3, 4],    side: 'left'  },
-    { label: 'ANDROID', slots: [9, 10, 11, 12],  side: 'left'  },
-    { label: 'NATURE',  slots: [5, 6, 7, 8],    side: 'right' },
-    { label: 'UNKNOWN', slots: [13, 14, 15, 16], side: 'right' },
-  ],
+  { label: 'ROBOT',   side: 'left',  slots: [1,2,3,4],
+    imagen: 'grupos/robot.png',   // 464x228px con padding de 10px
+    bgPos: ['10px 10px','−101px 10px','−212px 10px','−323px 10px'] },
+
+  { label: 'ANDROID', side: 'left',  slots: [9,10,11,12],
+    imagen: 'grupos/android.png', // 472x234px
+    bgPos: ['10px 10px','−103px 10px','−216px 10px','−329px 10px'] },
+
+  { label: 'NATURE',  side: 'right', slots: [5,6,7,8],
+    imagen: 'grupos/nature.png',  // 468x228px
+    bgPos: ['10px 10px','−102px 10px','−214px 10px','−326px 10px'] },
+
+  { label: 'UNKNOWN', side: 'right', slots: [13,14,15,16],
+    imagen: 'grupos/unknown.png', // 468x234px
+    bgPos: ['10px 10px','−102px 10px','−214px 10px','−326px 10px'] },
+],
 
   /* ia: 'O'=ChatGPT  'A'=Claude  'G'=Gemini */
   equipos: [
@@ -642,46 +652,17 @@ function applyLbRowStyle(row,eq,force){
 }
 
 /* ── Build character card ── */
-function buildCard(eq){
+function buildCard(eq, bgImg, bgPos){
   const ia=IA[eq.ia]||DEF;
   const card=document.createElement('div');
   card.className='char-card';
   card.dataset.slot=eq.slot;
-  card.style.borderColor=ia.color+'44';
-
-  const inner=document.createElement('div');
-  inner.className='card-inner';
-
-  const img=document.createElement('img');
-  img.alt=eq.nombre;
-  img.style.display='block';
-
-  const init=document.createElement('div');
-init.className='card-initials';
-init.textContent=eq.nombre.split(/\s+/).map(w=>w[0]).join('').substring(0,2).toUpperCase();
-init.style.display='flex';
-img.style.display='none';
-loadImg(img, eq.slot,
-  () => { init.style.display='none'; img.style.display='block'; },
-  () => { img.style.display='none';  init.style.display='flex'; }
-);
-
-  inner.appendChild(img);inner.appendChild(init);card.appendChild(inner);
+  card.style.borderColor=ia.color+'55';
+  card.style.backgroundImage='url('+bgImg+')';
+  card.style.backgroundPosition=bgPos;
 
   card.addEventListener('mouseenter',()=>selectSlot(eq.slot));
-card.addEventListener('mouseleave',()=>deselect());
-  card.addEventListener('mouseenter',()=>{
-    const s=parseInt(card.dataset.slot);
-    if(s===selectedSlot) return;
-    card.style.borderColor=ia.color+'bb';
-    card.style.boxShadow='0 0 14px '+ia.glow;
-  });
-  card.addEventListener('mouseleave',()=>{
-    const s=parseInt(card.dataset.slot);
-    if(s===selectedSlot) return;
-    card.style.borderColor=ia.color+'44';
-    card.style.boxShadow='';
-  });
+  card.addEventListener('mouseleave',()=>deselect());
   return card;
 }
 
@@ -698,7 +679,10 @@ function renderCompetitors(){
     group.appendChild(lbl);
 
     const row=document.createElement('div');row.className='cards-row';
-    cat.slots.forEach(s=>{const e=slotMap[s];if(e)row.appendChild(buildCard(e))});
+    cat.slots.forEach((s, idx) => {
+  const e = slotMap[s];
+  if(e) row.appendChild(buildCard(e, cat.imagen, cat.bgPos[idx]));
+});
     group.appendChild(row);col.appendChild(group);
   });
 
