@@ -27,8 +27,15 @@ body::before{content:'';position:fixed;inset:0;
 .full-container{max-width:1400px;margin:0 auto;padding:0 1rem;position:relative;z-index:1}
 
 /* ── Header ── */
-header{padding:3rem 0 1.2rem;text-align:center}
-.logo-wrap img{max-width:360px;width:80vw;height:auto}
+header{padding:3rem 0 3rem;text-align:center}
+.logo-wrap img{
+  max-width:360px;
+  width:80vw;
+  height:auto;
+
+  transform:scale(0.8);
+  transform-origin:center;
+}
 .edition-badge{display:inline-block;border:.5px solid var(--border-hi);padding:.3rem 1.1rem;border-radius:2rem;margin-top:.9rem;
   font-family:'Rajdhani',sans-serif;font-size:.82rem;color:var(--red-light);letter-spacing:.2em;text-transform:uppercase}
 .divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent);margin:1.4rem auto}
