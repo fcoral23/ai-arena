@@ -243,12 +243,27 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 /* ══════════════════════════════════════════
    BOTTOM SPLIT — leaderboard | tabla puntos
 ══════════════════════════════════════════ */
-.bottom-split{
-  display:grid;
-  grid-template-columns:300px 1fr;
-  gap:1.5rem;
-  align-items:start;
-  margin-bottom:3rem;
+.bottom-split {
+  display: grid;
+  grid-template-columns: 320px 1fr; /* Mantiene el ranking a la izquierda y la tabla a la derecha */
+  gap: 1.5rem;
+  align-items: start;
+  margin-bottom: 3rem;
+  
+  /* NUEVO: Esto fuerza a que el grupo de tablas no se estire más que el video */
+  max-width: 960px; 
+  margin-left: auto;
+  margin-right: auto;
+  width: 100%;
+}
+
+/* Ajuste opcional para que la tabla de la derecha no se desborde */
+.detail-table-wrap {
+  background: var(--bg-card);
+  border: .5px solid var(--border);
+  border-radius: .75rem;
+  overflow-x: auto; /* Permite scroll horizontal si los datos son muchos */
+  max-width: 100%;
 }
 
 /* ── Leaderboard panel ── */
