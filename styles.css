@@ -212,15 +212,24 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 .team-name-display{
   font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;
   letter-spacing:.08em;text-transform:uppercase;text-align:center;
-  color:#000;
+  color:#fff; /* CAMBIADO: Blanco para que se vea sobre el fondo negro */
   text-shadow:
     -1px -1px 0 #ff2d2d,
      1px -1px 0 #ff2d2d,
     -1px  1px 0 #ff2d2d,
      1px  1px 0 #ff2d2d,
-     0 0 12px rgba(255,0,0,.5);
-  opacity:0;transition:opacity .3s;line-height:1.1;max-width:240px;
+     0 0 12px rgba(255,0,0,0.8); /* Brillo un poco más fuerte */
+  opacity:0;
+  transition: opacity .3s ease;
+  line-height:1.1;
+  max-width:240px;
   word-break:break-word;
+  z-index: 100; /* Asegura que esté por encima de la imagen */
+}
+
+/* NUEVO: Esta regla es indispensable para que el JS funcione */
+.team-name-display.visible {
+  opacity: 1 !important;
 }
 
 .design-credit{
