@@ -209,17 +209,22 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 .team-name-display{
   font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;
   letter-spacing:.08em;text-transform:uppercase;text-align:center;
-  color:#ff2d2d;
-  text-shadow:-1px -1px 0 #000,1px -1px 0 #000,-1px 1px 0 #000,1px 1px 0 #000,0 0 12px rgba(255,0,0,.5);
+  color:#000;
+  text-shadow:
+    -1px -1px 0 #ff2d2d,
+     1px -1px 0 #ff2d2d,
+    -1px  1px 0 #ff2d2d,
+     1px  1px 0 #ff2d2d,
+     0 0 12px rgba(255,0,0,.5);
   opacity:0;transition:opacity .3s;line-height:1.1;max-width:240px;
   word-break:break-word;
 }
-.team-name-display.visible{opacity:1}
 
 .design-credit{
   position:absolute;bottom:0.6rem;left:50%;transform:translateX(-50%);
-  font-family:'Exo 2',sans-serif;font-style:italic;font-weight:300;
-  font-size:.68rem;color:var(--text-muted);letter-spacing:.04em;
+  font-family:'Exo 2',sans-serif;font-style:italic;font-weight:400;
+  font-size:.8rem;color:#d8d8d8;letter-spacing:.04em;
+  text-shadow:0 0 4px rgba(255,255,255,.15);
   white-space:nowrap;z-index:12;opacity:0;transition:opacity .3s;
 }
 
