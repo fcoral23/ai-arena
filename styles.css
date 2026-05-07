@@ -86,8 +86,10 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 
 /* Arena row */
 .arena-row{
-  display:flex;align-items:center;justify-content:center;
-  gap:1rem;
+  position:relative;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
 
 /* Slot columns */
@@ -158,8 +160,20 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 
 /* ── Center display ── */
 .center-display{
-  position:relative;height:380px;width:780px;
-  flex-shrink:0;background:#000;border-radius:.5rem;overflow:visible;
+  position:absolute;   /* ya no participa en layout */
+  left:50%;
+  top:50%;
+  transform:translate(-50%,-50%);
+
+  height:380px;
+  width:780px;
+
+  background:#000;
+  border-radius:.5rem;
+  overflow:visible;
+
+  z-index:0;          /* detrás */
+  pointer-events:none;
 }
 .center-char-img{
   position:absolute;bottom:0;left:50%;transform:translateX(-50%);
