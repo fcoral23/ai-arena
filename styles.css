@@ -142,7 +142,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   cursor:pointer;
   flex-shrink:0;
   /* cada slot se monta sobre el anterior */
-  margin-left:-33px;
+  margin-left:-55px;
 }
 .slots-row .slot-wrap:first-child{margin-left:0}
 
@@ -184,7 +184,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   transform:translate(-50%,-50%);
 
   height:380px;
-  width:780px;
+  width:850px;
 
   background:#000;
   border-radius:.5rem;
