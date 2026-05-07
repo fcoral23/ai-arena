@@ -147,13 +147,18 @@ function showSlot(slot) {
   loadCenterImg(cImg, slot, el => el.classList.add('visible'), () => {});
 
 /* Nombre del equipo */
-const nameEl = document.getElementById('team-name');
-nameEl.textContent = eq.nombre;
-// Borramos las líneas de nameEl.style.color y textShadow
-nameEl.classList.add('visible');
+  const nameEl = document.getElementById('team-name');
+  if (nameEl) {
+    nameEl.textContent = eq.nombre;
+    
+    // Quitamos las líneas que ponían color y shadow en ''
+    nameEl.classList.add('visible');
 
-clearTimeout(nameEl.hideTimer);
-nameEl.hideTimer=setTimeout(()=>nameEl.classList.remove('visible'),1000);
+    clearTimeout(nameEl.hideTimer);
+    nameEl.hideTimer = setTimeout(() => {
+        nameEl.classList.remove('visible');
+    }, 1000);
+  }
 
 document.getElementById('choose-text').style.opacity='0';
 
