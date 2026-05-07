@@ -104,14 +104,20 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   display:flex;flex-direction:column;justify-content:center;
   gap:4.5rem;align-items:flex-end;
   position:relative;z-index:5;
-  transform:translateX(-90px);
+  transform:translate(-90px,-35px);
+
+  outline:4px solid lime!important;
+  background:rgba(0,255,0,.12)!important;
 }
 
 .arena-col-right{
   display:flex;flex-direction:column;justify-content:center;
   gap:4.5rem;align-items:flex-start;
   position:relative;z-index:5;
-  transform:translateX(90px);
+  transform:translate(90px,-35px);
+
+  outline:4px solid lime!important;
+  background:rgba(0,255,0,.12)!important;
 }
 
 /* Category group — label DEBAJO de los slots */
