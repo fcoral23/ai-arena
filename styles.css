@@ -127,7 +127,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 /* Baja SOLO la segunda fila de cada lado */
 .arena-col-left .cat-group:nth-child(2),
 .arena-col-right .cat-group:nth-child(2){
-  transform:translateY(35px);
+  transform:translateY(0);
 }
 
 .cat-label{
