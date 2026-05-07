@@ -99,12 +99,11 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 
 .arena-col-left,.arena-col-right{outline:2px solid lime}
 
-/* Slot columns */
 .arena-col-left{
   display:flex;flex-direction:column;justify-content:center;
   gap:4.5rem;align-items:flex-end;
   position:relative;z-index:5;
-  transform:translate(-90px,-35px);
+  transform:translateX(-90px);
 
   outline:4px solid lime!important;
   background:rgba(0,255,0,.12)!important;
@@ -114,7 +113,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   display:flex;flex-direction:column;justify-content:center;
   gap:4.5rem;align-items:flex-start;
   position:relative;z-index:5;
-  transform:translate(90px,-35px);
+  transform:translateX(90px);
 
   outline:4px solid lime!important;
   background:rgba(0,255,0,.12)!important;
