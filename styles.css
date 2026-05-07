@@ -67,6 +67,9 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
    ARENA — ancho completo
 ══════════════════════════════════════════ */
 .arena-section{
+  width:100%;
+  box-sizing:border-box;
+
   background:var(--bg-card);
   border:.5px solid var(--border);
   border-radius:.75rem;
