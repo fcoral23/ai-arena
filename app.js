@@ -152,7 +152,10 @@ function showSlot(slot) {
   nameEl.style.color = ia.color;
   nameEl.style.textShadow = '0 0 20px ' + ia.color + ',0 0 6px ' + ia.color;
   nameEl.classList.add('visible');
-  document.getElementById('choose-text').style.opacity = '0';
+clearTimeout(nameEl.hideTimer);
+nameEl.hideTimer=setTimeout(()=>nameEl.classList.remove('visible'),2000);
+
+document.getElementById('choose-text').style.opacity='0';
 
   /* Operadores arriba */
   const opsBar = document.getElementById('ops-bar');
