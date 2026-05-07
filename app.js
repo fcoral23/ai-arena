@@ -146,14 +146,14 @@ function showSlot(slot) {
   cImg.classList.remove('visible');
   loadCenterImg(cImg, slot, el => el.classList.add('visible'), () => {});
 
-  /* Nombre del equipo (no de la IA) */
-  const nameEl = document.getElementById('team-name');
-  nameEl.textContent=eq.nombre;
-nameEl.style.color='';
-nameEl.style.textShadow='';
+/* Nombre del equipo */
+const nameEl = document.getElementById('team-name');
+nameEl.textContent = eq.nombre;
+// Borramos las líneas de nameEl.style.color y textShadow
 nameEl.classList.add('visible');
+
 clearTimeout(nameEl.hideTimer);
-nameEl.hideTimer=setTimeout(()=>nameEl.classList.remove('visible'),2000);
+nameEl.hideTimer=setTimeout(()=>nameEl.classList.remove('visible'),1000);
 
 document.getElementById('choose-text').style.opacity='0';
 
