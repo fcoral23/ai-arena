@@ -97,7 +97,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 
 /* Slot columns */
 
-.arena-col-left,.arena-col-right{outline:2px solid lime}
+
 
 .arena-col-left{
   display:flex;flex-direction:column;justify-content:center;
@@ -105,8 +105,6 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   position:relative;z-index:5;
   transform:translateX(-90px);
 
-  outline:4px solid lime!important;
-  background:rgba(0,255,0,.12)!important;
 }
 
 .arena-col-right{
@@ -115,8 +113,6 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   position:relative;z-index:5;
   transform:translateX(90px);
 
-  outline:4px solid lime!important;
-  background:rgba(0,255,0,.12)!important;
 }
 
 /* Category group — label DEBAJO de los slots */
