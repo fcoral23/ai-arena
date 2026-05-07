@@ -93,8 +93,26 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 }
 
 /* Slot columns */
-.arena-col-left {display:flex;flex-direction:column;gap:1.5rem;align-items:flex-end}
-.arena-col-right{display:flex;flex-direction:column;gap:1.5rem;align-items:flex-start}
+/* Slot columns */
+.arena-col-left{
+  display:flex;
+  flex-direction:column;
+  gap:1.5rem;
+  align-items:flex-end;
+
+  position:relative;
+  z-index:5;
+}
+
+.arena-col-right{
+  display:flex;
+  flex-direction:column;
+  gap:1.5rem;
+  align-items:flex-start;
+
+  position:relative;
+  z-index:5;
+}
 
 /* Category group — label DEBAJO de los slots */
 .cat-group{display:flex;flex-direction:column;gap:.4rem}
