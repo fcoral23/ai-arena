@@ -102,6 +102,8 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 
   position:relative;
   z-index:5;
+
+  transform:translateX(-90px);
 }
 
 .arena-col-right{
@@ -112,12 +114,19 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 
   position:relative;
   z-index:5;
+
+  transform:translateX(90px);
 }
 
 /* Category group — label DEBAJO de los slots */
 .cat-group{display:flex;flex-direction:column;gap:.4rem}
 .arena-col-left  .cat-group{align-items:flex-start}
 .arena-col-right .cat-group{align-items:flex-end}
+/* Baja SOLO la segunda fila de cada lado */
+.arena-col-left .cat-group:nth-child(2),
+.arena-col-right .cat-group:nth-child(2){
+  transform:translateY(35px);
+}
 
 .cat-label{
   font-family:'Rajdhani',sans-serif;font-size:1rem;font-weight:700;
