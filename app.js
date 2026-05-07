@@ -148,10 +148,10 @@ function showSlot(slot) {
 
   /* Nombre del equipo (no de la IA) */
   const nameEl = document.getElementById('team-name');
-  nameEl.textContent = eq.nombre;
-  nameEl.style.color = ia.color;
-  nameEl.style.textShadow = '0 0 20px ' + ia.color + ',0 0 6px ' + ia.color;
-  nameEl.classList.add('visible');
+  nameEl.textContent=eq.nombre;
+nameEl.style.color='';
+nameEl.style.textShadow='';
+nameEl.classList.add('visible');
 clearTimeout(nameEl.hideTimer);
 nameEl.hideTimer=setTimeout(()=>nameEl.classList.remove('visible'),2000);
 
