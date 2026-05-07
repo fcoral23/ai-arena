@@ -96,6 +96,9 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 }
 
 /* Slot columns */
+
+.arena-col-left,.arena-col-right{outline:2px solid lime}
+
 /* Slot columns */
 .arena-col-left{
   display:flex;flex-direction:column;justify-content:center;
@@ -176,7 +179,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   top:50%;
   transform:translate(-50%,-50%);
 
-  height:250px;
+  height:500px;
   width:900px;
 
   background:#000;
