@@ -278,24 +278,42 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 }
 .lb-group-header:first-child{margin-top:0}
 
-.lb-entry{
-  display:flex;align-items:center;gap:.7rem;
-  border-radius:.6rem;padding:.55rem .75rem;
-  cursor:pointer;transition:transform .15s,box-shadow .2s,border-color .2s;
-  border:.5px solid transparent;background:var(--bg-card);
-  animation:fadeUp .35s both;
+/* Estilo base para todas las entradas */
+.lb-entry {
+  display: flex; align-items: center; gap: .7rem;
+  cursor: pointer; transition: all .2s;
+  border-radius: .4rem; border: .5px solid transparent;
+  margin-bottom: 4px; overflow: hidden;
 }
-.lb-entry:hover{transform:translateX(3px)}
-.lb-entry.selected{transform:translateX(4px)}
-.lb-entry.top4{padding:.75rem .85rem;border-radius:.7rem}
-.lb-entry.top4   .lb-avatar{width:3rem;height:3rem}
-.lb-entry.top4   .lb-name  {font-size:.95rem}
-.lb-entry.top4   .lb-pts   {font-size:1.4rem}
-.lb-entry.top4   .lb-rank  {font-size:1.3rem}
-.lb-entry:not(.top4) .lb-avatar{width:2.2rem;height:2.2rem}
-.lb-entry:not(.top4) .lb-name  {font-size:.78rem}
-.lb-entry:not(.top4) .lb-pts   {font-size:1.05rem}
-.lb-entry:not(.top4) .lb-rank  {font-size:1rem}
+
+/* NIVEL 1: TOP 4 (Altos y con fondo) */
+.lb-entry.top4 {
+  height: 55px;
+  padding: 0 .8rem;
+}
+.lb-entry.top4 .lb-avatar { width: 2.5rem; height: 2.5rem; }
+
+/* NIVEL 2: MID 4 (Pos 5 a 8 - Medianos con borde) */
+/* Selecciona las posiciones de la 5 a la 8 en el grid */
+.lb-entry:nth-child(n+7):nth-child(-n+10) {
+  height: 42px;
+  padding: 0 .7rem;
+}
+.lb-entry:nth-child(n+7):nth-child(-n+10) .lb-avatar { width: 1.8rem; height: 1.8rem; }
+
+/* NIVEL 3: BOTTOM 8 (Pos 9 a 16 - Bajos y sin imagen) */
+.lb-entry:nth-child(n+11) {
+  height: 30px;
+  padding: 0 .7rem;
+  background: rgba(255,255,255,0.02) !important;
+}
+.lb-entry:nth-child(n+11) .lb-avatar {
+  display: none; /* Quitamos la imagen aquí */
+}
+.lb-entry:nth-child(n+11) .lb-name {
+  font-size: 0.75rem;
+  opacity: 0.7;
+}
 
 .lb-rank{font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--text-muted);min-width:1.5rem;text-align:center;line-height:1}
 .lb-avatar{border-radius:50%;overflow:hidden;border:1.5px solid rgba(255,255,255,.08);
