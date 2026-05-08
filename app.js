@@ -242,38 +242,40 @@ function applyLbRowStyle(row, eq, force) {
   const rank = parseInt(row.dataset.rank);
   const ia = IA[eq.ia] || DEF;
   
-  // 1. Ajuste de contenido: Unificar Puntos + " PTS"
+  // 1. Corregir "undefined": Buscamos el valor real de puntos
+  const puntosValor = eq.pts || eq.puntos || 0; 
   const ptsEl = row.querySelector('.lb-pts');
-  if (ptsEl && !ptsEl.textContent.includes('PTS')) {
-    ptsEl.textContent = eq.puntos + " PTS";
+  if (ptsEl) {
+    ptsEl.textContent = puntosValor + " PTS";
   }
 
-  // 2. Aplicar Colores y Tamaños de fuente dinámicos
+  // 2. Estilos por rango
   if (rank <= 4) {
     row.style.setProperty('background', ia.color, 'important');
     row.style.boxShadow = '0 0 15px ' + ia.glow2;
     // Fuentes Top 4
     row.querySelector('.lb-name').style.fontSize = "1.1rem";
     row.querySelector('.lb-pts').style.fontSize = "1.1rem";
-    row.querySelector('.lb-rank').style.fontSize = "1.2rem";
+    row.querySelector('.lb-rank').style.fontSize = "1.3rem";
     row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = '#000');
     
   } else if (rank <= 8) {
     row.style.setProperty('background', 'rgba(0,0,0,0.6)', 'important');
     row.style.setProperty('border', `2px solid ${ia.color}`, 'important');
     // Fuentes Mid 4
-    row.querySelector('.lb-name').style.fontSize = "0.95rem";
-    row.querySelector('.lb-pts').style.fontSize = "0.95rem";
-    row.querySelector('.lb-rank').style.fontSize = "1rem";
+    row.querySelector('.lb-name').style.fontSize = "1rem";
+    row.querySelector('.lb-pts').style.fontSize = "1rem";
+    row.querySelector('.lb-rank').style.fontSize = "1.1rem";
     row.querySelector('.lb-rank').style.color = ia.color;
     row.querySelectorAll('.lb-name, .lb-pts').forEach(el => el.style.color = '#fff');
 
   } else {
     row.style.setProperty('background', 'rgba(255,255,255,0.05)', 'important');
-    // Fuentes Bottom 8 (Igualamos nombre y puntos)
-    const fontSizeBottom = "0.85rem";
-    row.querySelector('.lb-name').style.fontSize = fontSizeBottom;
-    row.querySelector('.lb-pts').style.fontSize = fontSizeBottom;
+    row.style.border = 'none';
+    // Fuentes Bottom 8 (Nombre y Puntos iguales)
+    const sizeB = "0.9rem";
+    row.querySelector('.lb-name').style.fontSize = sizeB;
+    row.querySelector('.lb-pts').style.fontSize = sizeB;
     row.querySelector('.lb-rank').style.fontSize = "0.8rem";
     row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = 'var(--text-muted)');
   }
@@ -284,16 +286,17 @@ function applyLbRowStyle(row, eq, force) {
 
 /* Highlight leaderboard */
 document.querySelectorAll('.lb-entry').forEach(row => {
-  const s = parseInt(row.dataset.slot);
-  const req = slotMap[s];
-  
-  if (s === slot) {
-    row.classList.add('selected'); // Activa el crecimiento CSS
-    applyLbRowStyle(row, req, true);
-  } else {
-    row.classList.remove('selected'); // Quita el crecimiento
-    applyLbRowStyle(row, req, false);
-  }
+    const s = parseInt(row.dataset.slot);
+    const req = slotMap[s];
+    
+    if (s === slot) {
+      row.classList.add('selected'); // Activa crecimiento CSS proporcional
+    } else {
+      row.classList.remove('selected'); // Desactiva crecimiento
+    }
+    
+    // Aplicamos los estilos de color y texto actualizados
+    applyLbRowStyle(row, req, s === slot);
 });
 
 /* ══════════════════════════════════════════════════════════════
