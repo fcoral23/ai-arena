@@ -183,16 +183,19 @@ document.getElementById('choose-text').style.opacity='0';
   document.querySelectorAll('.lb-entry').forEach(row => {
     const s = parseInt(row.dataset.slot);
     const req = slotMap[s];
+    
     if (s === slot) {
-      const ria = IA[req.ia] || DEF;
-      row.style.borderColor = ria.color + '99';
-      row.style.boxShadow   = '0 0 12px ' + ria.glow2;
-      row.style.background  = ria.color + '14';
-      row.classList.add('selected');
+      // 1. Añadimos la clase para que el CSS aumente el tamaño (height: 100px)
+      row.classList.add('selected'); 
     } else {
-      applyLbRowStyle(row, req, false);
+      // 2. Quitamos la clase para que vuelva a su tamaño original
+      row.classList.remove('selected');
     }
-  });
+    
+    // 3. Llamamos a la función de estilos para que aplique los colores 
+    // y fuentes según el ranking (sin importar si está seleccionado o no)
+    applyLbRowStyle(row, req, false);
+});
 
   /* Highlight tabla */
   document.querySelectorAll('#detail-table tr.data-row').forEach(r => {
@@ -238,27 +241,40 @@ function deselect() {
 function applyLbRowStyle(row, eq, force) {
   const rank = parseInt(row.dataset.rank);
   const ia = IA[eq.ia] || DEF;
-
-  // IMPORTANTE: Ya no quitamos .selected aquí, lo hace la función showSlot
   
+  // 1. Ajuste de contenido: Unificar Puntos + " PTS"
+  const ptsEl = row.querySelector('.lb-pts');
+  if (ptsEl && !ptsEl.textContent.includes('PTS')) {
+    ptsEl.textContent = eq.puntos + " PTS";
+  }
+
+  // 2. Aplicar Colores y Tamaños de fuente dinámicos
   if (rank <= 4) {
-    // POS 1-4: SIEMPRE fondo sólido
     row.style.setProperty('background', ia.color, 'important');
-    row.style.setProperty('border', 'none', 'important');
-    row.style.boxShadow = '0 0 12px ' + ia.glow2;
+    row.style.boxShadow = '0 0 15px ' + ia.glow2;
+    // Fuentes Top 4
+    row.querySelector('.lb-name').style.fontSize = "1.1rem";
+    row.querySelector('.lb-pts').style.fontSize = "1.1rem";
+    row.querySelector('.lb-rank').style.fontSize = "1.2rem";
     row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = '#000');
+    
   } else if (rank <= 8) {
-    // POS 5-8: SIEMPRE borde color IA
-    row.style.setProperty('background', 'rgba(0,0,0,0.5)', 'important');
+    row.style.setProperty('background', 'rgba(0,0,0,0.6)', 'important');
     row.style.setProperty('border', `2px solid ${ia.color}`, 'important');
+    // Fuentes Mid 4
+    row.querySelector('.lb-name').style.fontSize = "0.95rem";
+    row.querySelector('.lb-pts').style.fontSize = "0.95rem";
+    row.querySelector('.lb-rank').style.fontSize = "1rem";
     row.querySelector('.lb-rank').style.color = ia.color;
-    row.querySelector('.lb-name').style.color = '#fff';
-    row.querySelector('.lb-pts').style.color = '#fff';
+    row.querySelectorAll('.lb-name, .lb-pts').forEach(el => el.style.color = '#fff');
+
   } else {
-    // POS 9-16: SIEMPRE gris suave
-    row.style.setProperty('background', 'rgba(255,255,255,0.04)', 'important');
-    row.style.setProperty('border', 'none', 'important');
-    row.style.boxShadow = 'none';
+    row.style.setProperty('background', 'rgba(255,255,255,0.05)', 'important');
+    // Fuentes Bottom 8 (Igualamos nombre y puntos)
+    const fontSizeBottom = "0.85rem";
+    row.querySelector('.lb-name').style.fontSize = fontSizeBottom;
+    row.querySelector('.lb-pts').style.fontSize = fontSizeBottom;
+    row.querySelector('.lb-rank').style.fontSize = "0.8rem";
     row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = 'var(--text-muted)');
   }
 }
