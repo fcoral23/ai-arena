@@ -239,7 +239,7 @@ function applyLbRowStyle(row, eq, force) {
   const rank = parseInt(row.dataset.rank);
   const ia = IA[eq.ia] || DEF;
   
-  // CORRECCIÓN PUNTOS: Buscamos en 'total' que es la columna del archivo
+  // Sincronizar puntos desde la columna 'total'
   const puntosValor = eq.total !== undefined ? eq.total : 0; 
   const ptsEl = row.querySelector('.lb-pts');
   if (ptsEl) {
@@ -252,21 +252,21 @@ function applyLbRowStyle(row, eq, force) {
     row.style.setProperty('background', ia.color, 'important');
     row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => {
       el.style.color = '#000';
-      el.style.fontSize = "1rem";
+      el.style.fontSize = "0.95rem"; // Un poco más pequeño para que no choque con la imagen grande
     });
   } else if (rank <= 8) {
     row.style.setProperty('background', 'rgba(0,0,0,0.5)', 'important');
     row.style.setProperty('border', `1.5px solid ${ia.color}`, 'important');
     row.querySelectorAll('.lb-name, .lb-pts').forEach(el => {
       el.style.color = '#fff';
-      el.style.fontSize = "0.9rem";
+      el.style.fontSize = "0.85rem";
     });
     row.querySelector('.lb-rank').style.color = ia.color;
   } else {
     row.style.setProperty('background', 'rgba(255,255,255,0.04)', 'important');
     row.querySelectorAll('.lb-name, .lb-pts, .lb-rank').forEach(el => {
       el.style.color = 'var(--text-muted)';
-      el.style.fontSize = "0.85rem";
+      el.style.fontSize = "0.8rem";
     });
   }
 }
