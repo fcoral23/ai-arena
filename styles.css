@@ -313,16 +313,38 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 
 /* --- LOGICA DE CRECIMIENTO --- */
 /* Cuando NO está seleccionado ni en hover, usamos alturas base */
-.lb-entry[data-rank] { height: 32px; } /* Base para 9-16 */
+/* Alturas base */
+.lb-entry { height: 32px; } 
 .lb-entry[data-rank="5"], .lb-entry[data-rank="6"], 
 .lb-entry[data-rank="7"], .lb-entry[data-rank="8"] { height: 45px; }
-.lb-entry.top4 { height: 58px; }
+.lb-entry.top4 { height: 58px !important; }
 
-/* Cuando está seleccionado o en hover, duplicamos su propia altura */
+/* CRECIMIENTO PROPORCIONAL (El doble de cada uno) */
 .lb-entry:hover, .lb-entry.selected {
-  z-index: 100;
-  height: 100px !important; /* Altura unificada al crecer */
+  z-index: 100 !important;
   box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+/* 9 al 16: de 32px a 64px */
+.lb-entry:hover, .lb-entry.selected { height: 64px; }
+
+/* 5 al 8: de 45px a 90px */
+.lb-entry[data-rank="5"]:hover, .lb-entry[data-rank="5"].selected,
+.lb-entry[data-rank="6"]:hover, .lb-entry[data-rank="6"].selected,
+.lb-entry[data-rank="7"]:hover, .lb-entry[data-rank="7"].selected,
+.lb-entry[data-rank="8"]:hover, .lb-entry[data-rank="8"].selected { 
+  height: 90px; 
+}
+
+/* 1 al 4: de 58px a 116px */
+.lb-entry.top4:hover, .lb-entry.top4.selected { 
+  height: 116px !important; 
+}
+
+/* Ajuste de imagen proporcional al crecer */
+.lb-entry:hover .lb-avatar, .lb-entry.selected .lb-avatar {
+  width: 3.5rem; height: 3.5rem; 
+  display: block; /* La mostramos incluso en los de abajo al crecer */
 }
 
 /* --- ESCALADO DE CONTENIDO --- */
