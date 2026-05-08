@@ -238,30 +238,47 @@ function deselect() {
 function applyLbRowStyle(row, eq, force) {
   const rank = parseInt(row.dataset.rank);
   const ia = IA[eq.ia] || DEF;
-  row.classList.remove('selected');
 
+  // IMPORTANTE: Ya no quitamos .selected aquí, lo hace la función showSlot
+  
   if (rank <= 4) {
-    // NIVEL 1: Fondo sólido
+    // POS 1-4: SIEMPRE fondo sólido
     row.style.setProperty('background', ia.color, 'important');
     row.style.setProperty('border', 'none', 'important');
     row.style.boxShadow = '0 0 12px ' + ia.glow2;
     row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = '#000');
   } else if (rank <= 8) {
-    // NIVEL 2: Borde de color
-    row.style.setProperty('background', 'rgba(0,0,0,0.4)', 'important');
-    row.style.setProperty('border', `1.5px solid ${ia.color}`, 'important');
-    row.style.boxShadow = 'none';
+    // POS 5-8: SIEMPRE borde color IA
+    row.style.setProperty('background', 'rgba(0,0,0,0.5)', 'important');
+    row.style.setProperty('border', `2px solid ${ia.color}`, 'important');
     row.querySelector('.lb-rank').style.color = ia.color;
     row.querySelector('.lb-name').style.color = '#fff';
     row.querySelector('.lb-pts').style.color = '#fff';
   } else {
-    // NIVEL 3: Gris / Apagado
-    row.style.setProperty('background', 'rgba(255,255,255,0.03)', 'important');
+    // POS 9-16: SIEMPRE gris suave
+    row.style.setProperty('background', 'rgba(255,255,255,0.04)', 'important');
     row.style.setProperty('border', 'none', 'important');
     row.style.boxShadow = 'none';
     row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = 'var(--text-muted)');
   }
 }
+
+// BUSCA EN TU JS LA PARTE DE "Highlight leaderboard" DENTRO DE showSlot
+// Y REEMPLÁZALA CON ESTA:
+
+/* Highlight leaderboard */
+document.querySelectorAll('.lb-entry').forEach(row => {
+  const s = parseInt(row.dataset.slot);
+  const req = slotMap[s];
+  
+  if (s === slot) {
+    row.classList.add('selected'); // Activa el crecimiento CSS
+    applyLbRowStyle(row, req, true);
+  } else {
+    row.classList.remove('selected'); // Quita el crecimiento
+    applyLbRowStyle(row, req, false);
+  }
+});
 
 /* ══════════════════════════════════════════════════════════════
    BUILD SLOT CARD
