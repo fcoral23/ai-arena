@@ -303,27 +303,28 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   cursor: pointer; 
   transition: all .2s;
   border-radius: .4rem; 
-  border: none !important;
   margin-bottom: 4px; 
   overflow: hidden;
-  height: 30px; /* Altura para los últimos 8 */
+  height: 30px; 
   padding: 0 .7rem;
-  background: rgba(255,255,255,0.02) !important;
+  /* Sin !important para que el JS pueda cambiarlo */
+  background: rgba(255,255,255,0.02);
+  border: none;
 }
 
 /* Ocultamos avatar por defecto para todos */
 .lb-entry .lb-avatar { display: none; }
-
-/* Texto pequeño por defecto */
 .lb-entry .lb-name { font-size: 0.75rem; opacity: 0.7; }
 
-/* 2. NIVEL 2: MID 4 (Pos 5 a 8) - Forzamos por número de ranking */
+/* 2. NIVEL 2: MID 4 (Pos 5 a 8) */
 .lb-entry[data-rank="5"], .lb-entry[data-rank="6"], 
 .lb-entry[data-rank="7"], .lb-entry[data-rank="8"] {
   height: 42px;
   padding: 0 .7rem;
-  background: rgba(0,0,0,0.2) !important;
-  border: 1.5px solid transparent !important; /* El color lo pone el JS */
+  /* Quitamos el !important del background y border */
+  background: rgba(0,0,0,0.2);
+  border-style: solid;
+  border-width: 1.5px;
 }
 .lb-entry[data-rank="5"] .lb-avatar, .lb-entry[data-rank="6"] .lb-avatar, 
 .lb-entry[data-rank="7"] .lb-avatar, .lb-entry[data-rank="8"] .lb-avatar { 
@@ -339,9 +340,9 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 
 /* 3. NIVEL 1: TOP 4 (Pos 1 a 4) */
 .lb-entry.top4 {
-  height: 55px !important;
+  height: 55px !important; /* Mantenemos la altura */
   padding: 0 .8rem;
-  background: transparent !important; /* El color lo pone el JS */
+  /* El fondo lo pondrá el JS */
 }
 .lb-entry.top4 .lb-avatar { 
   display: block; 
