@@ -235,15 +235,17 @@ function deselect() {
    LEADERBOARD ROW STYLE
 ══════════════════════════════════════════════════════════════ */
 function applyLbRowStyle(row, eq, force) {
+  if (!eq) return;
   const rank = parseInt(row.dataset.rank);
   const ia = IA[eq.ia] || DEF;
   
-  // Sincronizar Puntos
-  const puntosValor = eq.pts || eq.puntos || 0; 
+  // CORRECCIÓN PUNTOS: Buscamos en 'total' que es la columna del archivo
+  const puntosValor = eq.total !== undefined ? eq.total : 0; 
   const ptsEl = row.querySelector('.lb-pts');
-  if (ptsEl) ptsEl.textContent = puntosValor + " PTS";
+  if (ptsEl) {
+    ptsEl.textContent = puntosValor + " PTS";
+  }
 
-  // Reset de bordes para evitar herencias
   row.style.border = 'none';
 
   if (rank <= 4) {
@@ -252,7 +254,6 @@ function applyLbRowStyle(row, eq, force) {
       el.style.color = '#000';
       el.style.fontSize = "1rem";
     });
-    row.querySelector('.lb-rank').style.fontSize = "1.1rem";
   } else if (rank <= 8) {
     row.style.setProperty('background', 'rgba(0,0,0,0.5)', 'important');
     row.style.setProperty('border', `1.5px solid ${ia.color}`, 'important');
@@ -261,14 +262,12 @@ function applyLbRowStyle(row, eq, force) {
       el.style.fontSize = "0.9rem";
     });
     row.querySelector('.lb-rank').style.color = ia.color;
-    row.querySelector('.lb-rank').style.fontSize = "1rem";
   } else {
     row.style.setProperty('background', 'rgba(255,255,255,0.04)', 'important');
-    const sizeB = "0.85rem";
-    row.querySelector('.lb-name').style.fontSize = sizeB;
-    row.querySelector('.lb-pts').style.fontSize = sizeB;
-    row.querySelector('.lb-rank').style.fontSize = "0.75rem";
-    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = 'var(--text-muted)');
+    row.querySelectorAll('.lb-name, .lb-pts, .lb-rank').forEach(el => {
+      el.style.color = 'var(--text-muted)';
+      el.style.fontSize = "0.85rem";
+    });
   }
 }
 
@@ -278,14 +277,13 @@ function applyLbRowStyle(row, eq, force) {
 /* Highlight leaderboard */
 document.querySelectorAll('.lb-entry').forEach(row => {
     const s = parseInt(row.dataset.slot);
-    const req = slotMap[s];
+    const req = slotMap[s]; // slotMap debe contener los datos del equipo incluyendo .total
     
     if (s === slot) {
       row.classList.add('selected');
     } else {
       row.classList.remove('selected');
     }
-    
     applyLbRowStyle(row, req, s === slot);
 });
 
