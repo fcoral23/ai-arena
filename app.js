@@ -240,30 +240,26 @@ function applyLbRowStyle(row, eq, force) {
   const ia = IA[eq.ia] || DEF;
   row.classList.remove('selected');
 
-  // Limpiamos estilos previos para evitar conflictos
-  row.style.border = 'none';
-
   if (rank <= 4) {
-    // POS 1-4: Fondo sólido IA + Texto Negro
-    row.style.background = ia.color;
-    row.style.boxShadow = '0 0 10px ' + ia.glow2;
-    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => {
-      el.style.color = '#000';
-    });
+    // NIVEL 1: Fondo sólido
+    row.style.setProperty('background', ia.color, 'important');
+    row.style.setProperty('border', 'none', 'important');
+    row.style.boxShadow = '0 0 12px ' + ia.glow2;
+    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = '#000');
   } else if (rank <= 8) {
-    // POS 5-8: Fondo oscuro + Borde color IA + Texto Blanco
-    row.style.background = 'rgba(0,0,0,0.4)';
-    row.style.border = '1.5px solid ' + ia.color;
+    // NIVEL 2: Borde de color
+    row.style.setProperty('background', 'rgba(0,0,0,0.4)', 'important');
+    row.style.setProperty('border', `1.5px solid ${ia.color}`, 'important');
+    row.style.boxShadow = 'none';
     row.querySelector('.lb-rank').style.color = ia.color;
     row.querySelector('.lb-name').style.color = '#fff';
     row.querySelector('.lb-pts').style.color = '#fff';
   } else {
-    // POS 9-16: Fondo grisáceo + Texto apagado
-    row.style.background = 'rgba(255,255,255,0.03)';
-    row.style.border = 'none';
-    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => {
-      el.style.color = 'var(--text-muted)';
-    });
+    // NIVEL 3: Gris / Apagado
+    row.style.setProperty('background', 'rgba(255,255,255,0.03)', 'important');
+    row.style.setProperty('border', 'none', 'important');
+    row.style.boxShadow = 'none';
+    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = 'var(--text-muted)');
   }
 }
 
