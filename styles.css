@@ -258,6 +258,54 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   width: 100%;
 }
 
+
+
+/* --- ADAPTACIÓN PARA MÓVILES --- */
+@media (max-width: 768px) {
+  .bottom-split {
+    /* Pasamos de 2 columnas a 1 sola columna */
+    grid-template-columns: 1fr;
+    gap: 2rem;
+    padding: 0 10px; /* Margen pequeño para que no toque los bordes del móvil */
+  }
+
+  /* El Ranking ocupará el 100% del ancho */
+  .lb-panel {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Ajustamos el tamaño de las fuentes para que quepan en pantallas pequeñas */
+  .lb-entry .lb-name {
+    font-size: 0.75rem !important;
+  }
+  
+  .lb-entry .lb-pts {
+    font-size: 0.75rem !important;
+  }
+
+  /* Reducimos un poco el crecimiento en móvil para no ocupar toda la pantalla */
+  .lb-entry.top4:hover, .lb-entry.top4.selected { 
+    height: 75px !important; 
+  }
+  
+  .lb-entry.top4:hover .lb-avatar, .lb-entry.top4.selected .lb-avatar {
+    height: 55px !important;
+    width: 55px !important;
+  }
+
+  /* Hacemos que la tabla de la derecha (puntos) tenga scroll horizontal 
+     si es muy ancha, para que no rompa el diseño */
+  .table-container { /* Asegúrate de que este sea el nombre de tu clase de la derecha */
+    overflow-x: auto;
+    width: 100%;
+  }
+}
+
+
+
+
+
 /* OPCIONAL: Añade esto para que el ranking use todo el alto disponible */
 .lb-panel {
   display: flex;
