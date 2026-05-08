@@ -237,24 +237,27 @@ function deselect() {
 ══════════════════════════════════════════════════════════════ */
 function applyLbRowStyle(row, eq, force) {
   const rank = parseInt(row.dataset.rank);
-  const isFinal = rank <= 4;
   const ia = IA[eq.ia] || DEF;
   row.classList.remove('selected');
-  if (isFinal) {
-    row.style.borderColor = ia.color + '55';
-    row.style.boxShadow   = '0 0 8px ' + ia.glow2;
-    row.style.background  = ia.color + '0a';
+
+  if (rank <= 4) {
+    // TOP 4: Fondo sólido del color de la IA
+    row.style.background = ia.color;
+    row.style.borderColor = ia.color;
+    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = '#000');
+  } else if (rank <= 8) {
+    // MID 4: Solo borde del color de la IA
+    row.style.background = 'rgba(0,0,0,0.2)';
+    row.style.border = '1.5px solid ' + ia.color;
+    row.querySelector('.lb-rank').style.color = ia.color;
+    row.querySelector('.lb-pts').style.color = '#fff';
+    row.querySelector('.lb-name').style.color = '#fff';
   } else {
-    row.style.borderColor = 'transparent';
-    row.style.boxShadow   = '';
-    row.style.background  = '';
+    // BOTTOM 8: Gris suave y sin bordes
+    row.style.background = 'rgba(255,255,255,0.03)';
+    row.style.border = 'none';
+    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = 'var(--text-muted)');
   }
-  const rankEl = row.querySelector('.lb-rank');
-  if (rankEl) rankEl.style.color = isFinal ? ia.color : '';
-  const ptsEl  = row.querySelector('.lb-pts');
-  if (ptsEl)  ptsEl.style.color  = isFinal ? ia.color : '';
-  const avEl   = row.querySelector('.lb-avatar');
-  if (avEl)   avEl.style.borderColor = isFinal ? ia.color + '66' : 'rgba(255,255,255,.08)';
 }
 
 /* ══════════════════════════════════════════════════════════════
