@@ -345,20 +345,42 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 .lb-entry.top4:hover, .lb-entry.top4.selected { height: 87px !important; }
 
 /* 3. AVATAR CIRCULAR (Solo aparece al interactuar) */
+/* 1. ESTADO BASE: NADIE TIENE IMAGEN */
 .lb-entry .lb-avatar { 
-  display: none; /* OCULTO POR DEFECTO PARA TODOS */
-  border-radius: 50%; /* SIEMPRE CÍRCULO */
+  display: none !important; /* Forzamos desaparición */
+  border-radius: 50% !important;
+  aspect-ratio: 1/1;
   object-fit: cover;
-  border: 2px solid rgba(255,255,255,0.2);
+  height: 90%; /* Para que llene la altura vertical */
+  width: auto;
+  border: 2px solid rgba(255,255,255,0.3);
   flex-shrink: 0;
 }
 
-/* Mostrar avatar solo en Hover o Selección */
-.lb-entry:hover .lb-avatar, .lb-entry.selected .lb-avatar {
-  display: block;
-  height: 80%; /* Casi todo el alto disponible */
-  width: auto;
-  aspect-ratio: 1 / 1;
+/* 2. ESTADO ACTIVO: SOLO AQUÍ APARECE LA IMAGEN */
+.lb-entry:hover .lb-avatar, 
+.lb-entry.selected .lb-avatar {
+  display: block !important; /* Solo se revela aquí */
+}
+
+/* 3. ALTURAS Y CRECIMIENTO 1.5x */
+.lb-entry { height: 32px; transition: height 0.3s ease; }
+.lb-entry[data-rank="5"], .lb-entry[data-rank="6"], 
+.lb-entry[data-rank="7"], .lb-entry[data-rank="8"] { height: 45px; }
+.lb-entry.top4 { height: 58px !important; }
+
+/* Aplicamos el 1.5x real */
+.lb-entry:hover, .lb-entry.selected { height: 48px; z-index: 10; }
+
+.lb-entry[data-rank="5"]:hover, .lb-entry[data-rank="5"].selected,
+.lb-entry[data-rank="6"]:hover, .lb-entry[data-rank="6"].selected,
+.lb-entry[data-rank="7"]:hover, .lb-entry[data-rank="7"].selected,
+.lb-entry[data-rank="8"]:hover, .lb-entry[data-rank="8"].selected { 
+  height: 68px; 
+}
+
+.lb-entry.top4:hover, .lb-entry.top4.selected { 
+  height: 87px !important; 
 }
 
 /* --- ESCALADO DE CONTENIDO --- */
