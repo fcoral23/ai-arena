@@ -240,23 +240,30 @@ function applyLbRowStyle(row, eq, force) {
   const ia = IA[eq.ia] || DEF;
   row.classList.remove('selected');
 
+  // Limpiamos estilos previos para evitar conflictos
+  row.style.border = 'none';
+
   if (rank <= 4) {
-    // TOP 4: Fondo sólido del color de la IA
+    // POS 1-4: Fondo sólido IA + Texto Negro
     row.style.background = ia.color;
-    row.style.borderColor = ia.color;
-    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = '#000');
+    row.style.boxShadow = '0 0 10px ' + ia.glow2;
+    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => {
+      el.style.color = '#000';
+    });
   } else if (rank <= 8) {
-    // MID 4: Solo borde del color de la IA
-    row.style.background = 'rgba(0,0,0,0.2)';
+    // POS 5-8: Fondo oscuro + Borde color IA + Texto Blanco
+    row.style.background = 'rgba(0,0,0,0.4)';
     row.style.border = '1.5px solid ' + ia.color;
     row.querySelector('.lb-rank').style.color = ia.color;
-    row.querySelector('.lb-pts').style.color = '#fff';
     row.querySelector('.lb-name').style.color = '#fff';
+    row.querySelector('.lb-pts').style.color = '#fff';
   } else {
-    // BOTTOM 8: Gris suave y sin bordes
+    // POS 9-16: Fondo grisáceo + Texto apagado
     row.style.background = 'rgba(255,255,255,0.03)';
     row.style.border = 'none';
-    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = 'var(--text-muted)');
+    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => {
+      el.style.color = 'var(--text-muted)';
+    });
   }
 }
 
