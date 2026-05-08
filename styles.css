@@ -315,46 +315,50 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 /* Cuando NO está seleccionado ni en hover, usamos alturas base */
 /* Alturas base */
 /* 1. ALTURAS BASE */
-.lb-entry { height: 32px; transition: all 0.3s ease; overflow: hidden; } 
+.lb-entry { 
+  height: 32px; 
+  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s; 
+  overflow: hidden; 
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0 1rem;
+  position: relative;
+} 
 .lb-entry[data-rank="5"], .lb-entry[data-rank="6"], 
 .lb-entry[data-rank="7"], .lb-entry[data-rank="8"] { height: 45px; }
 .lb-entry.top4 { height: 58px !important; }
 
 /* 2. CRECIMIENTO 1.5x */
-.lb-entry:hover, .lb-entry.selected {
-  z-index: 100 !important;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-}
+.lb-entry:hover, .lb-entry.selected { z-index: 100; }
 
-/* 9-16: de 32px a 48px */
+/* 9-16: crece a 48px */
 .lb-entry:hover, .lb-entry.selected { height: 48px; }
 
-/* 5-8: de 45px a 68px */
+/* 5-8: crece a 68px */
 .lb-entry[data-rank="5"]:hover, .lb-entry[data-rank="5"].selected,
 .lb-entry[data-rank="6"]:hover, .lb-entry[data-rank="6"].selected,
 .lb-entry[data-rank="7"]:hover, .lb-entry[data-rank="7"].selected,
-.lb-entry[data-rank="8"]:hover, .lb-entry[data-rank="8"].selected { 
-  height: 68px; 
-}
+.lb-entry[data-rank="8"]:hover, .lb-entry[data-rank="8"].selected { height: 68px; }
 
-/* 1-4: de 58px a 87px */
-.lb-entry.top4:hover, .lb-entry.top4.selected { 
-  height: 87px !important; 
-}
+/* 1-4: crece a 87px */
+.lb-entry.top4:hover, .lb-entry.top4.selected { height: 87px !important; }
 
-/* 3. LÓGICA DE AVATAR (Revelar al interactuar) */
+/* 3. AVATAR CIRCULAR (Solo aparece al interactuar) */
 .lb-entry .lb-avatar { 
-  display: none; /* Oculto para todos por defecto */
-  border-radius: 4px;
+  display: none; /* OCULTO POR DEFECTO PARA TODOS */
+  border-radius: 50%; /* SIEMPRE CÍRCULO */
   object-fit: cover;
+  border: 2px solid rgba(255,255,255,0.2);
+  flex-shrink: 0;
 }
 
+/* Mostrar avatar solo en Hover o Selección */
 .lb-entry:hover .lb-avatar, .lb-entry.selected .lb-avatar {
   display: block;
-  /* El avatar llena casi todo el alto de la caja expandida */
-  height: 85%; 
-  width: auto; 
-  aspect-ratio: 1/1;
+  height: 80%; /* Casi todo el alto disponible */
+  width: auto;
+  aspect-ratio: 1 / 1;
 }
 
 /* --- ESCALADO DE CONTENIDO --- */
