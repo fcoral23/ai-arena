@@ -301,31 +301,51 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   align-items: center; 
   gap: .7rem;
   cursor: pointer; 
-  /* Transición suave para el transform y colores */
-  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s, border 0.2s, box-shadow 0.2s;
+  /* Transición de altura suave */
+  transition: height 0.3s ease, background 0.2s, box-shadow 0.2s, transform 0.2s;
   border-radius: .4rem; 
   margin-bottom: 4px; 
-  overflow: visible; /* IMPORTANTE: para que se vea el crecimiento fuera de la caja */
-  height: 30px; 
-  padding: 0 .7rem;
-  background: rgba(255,255,255,0.02);
-  border: none;
   position: relative;
   z-index: 1;
+  overflow: hidden;
+  background: rgba(255,255,255,0.02);
 }
 
-/* 2. EFECTO DE SELECCIÓN Y HOVER (CRECIMIENTO) */
+/* --- LOGICA DE CRECIMIENTO --- */
+/* Cuando NO está seleccionado ni en hover, usamos alturas base */
+.lb-entry[data-rank] { height: 32px; } /* Base para 9-16 */
+.lb-entry[data-rank="5"], .lb-entry[data-rank="6"], 
+.lb-entry[data-rank="7"], .lb-entry[data-rank="8"] { height: 45px; }
+.lb-entry.top4 { height: 58px; }
+
+/* Cuando está seleccionado o en hover, duplicamos su propia altura */
 .lb-entry:hover, .lb-entry.selected {
-  z-index: 100 !important;
-  /* El scaleY(2.2) sobre los 55px del Top 4 nos da ~120px. 
-     Sobre los 30px de abajo nos da ~66px. */
-  transform: scaleY(2); 
+  z-index: 100;
+  height: 100px !important; /* Altura unificada al crecer */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
 }
 
-/* Contra-escalado para que el texto NO se estire */
-.lb-entry:hover > *, .lb-entry.selected > * {
-  transform: scaleY(0.5);
+/* --- ESCALADO DE CONTENIDO --- */
+.lb-entry .lb-avatar { 
+  width: 1.5rem; height: 1.5rem; 
+  transition: width 0.3s, height 0.3s; 
 }
+.lb-entry:hover .lb-avatar, .lb-entry.selected .lb-avatar {
+  width: 4rem; height: 4rem; /* La imagen crece proporcionalmente */
+}
+
+/* Tipografías base */
+.lb-rank { font-weight: 800; font-family: 'Rajdhani'; }
+.lb-name { font-weight: 700; text-transform: uppercase; }
+.lb-pts { font-family: 'Rajdhani'; font-weight: 800; white-space: nowrap; }
+
+/* Ajuste de fuentes al crecer */
+.lb-entry:hover .lb-name, .lb-entry.selected .lb-name { font-size: 1.5rem !important; }
+.lb-entry:hover .lb-rank, .lb-entry.selected .lb-rank { font-size: 1.8rem !important; }
+.lb-entry:hover .lb-pts, .lb-entry.selected .lb-pts { font-size: 1.5rem !important; }
+
+/* Ocultar el "Pts" pequeño antiguo si existía en el HTML */
+.lb-pts-label { display: none; }
 
 /* 3. NIVELES DE TAMAÑO ORIGINAL Y CONTENIDO */
 .lb-entry .lb-avatar { display: none; transition: transform 0.3s; }
