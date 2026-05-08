@@ -295,65 +295,61 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 .lb-group-header:first-child{margin-top:0}
 
 /* Estilo base para todas las entradas */
-/* 1. ESTILO BASE: Por defecto todas son pequeñas y sin imagen (Pos 9-16) */
+  /* 1. ESTILO BASE */
 .lb-entry {
   display: flex; 
   align-items: center; 
   gap: .7rem;
   cursor: pointer; 
-  transition: all .2s;
+  /* Transición suave para el transform y colores */
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), background 0.2s, border 0.2s, box-shadow 0.2s;
   border-radius: .4rem; 
   margin-bottom: 4px; 
-  overflow: hidden;
+  overflow: visible; /* IMPORTANTE: para que se vea el crecimiento fuera de la caja */
   height: 30px; 
   padding: 0 .7rem;
-  /* Sin !important para que el JS pueda cambiarlo */
   background: rgba(255,255,255,0.02);
   border: none;
+  position: relative;
+  z-index: 1;
 }
 
-/* Ocultamos avatar por defecto para todos */
-.lb-entry .lb-avatar { display: none; }
-.lb-entry .lb-name { font-size: 0.75rem; opacity: 0.7; }
+/* 2. EFECTO DE SELECCIÓN Y HOVER (CRECIMIENTO) */
+.lb-entry:hover, .lb-entry.selected {
+  z-index: 100 !important;
+  /* El scaleY(2.2) sobre los 55px del Top 4 nos da ~120px. 
+     Sobre los 30px de abajo nos da ~66px. */
+  transform: scaleY(2); 
+}
 
-/* 2. NIVEL 2: MID 4 (Pos 5 a 8) */
+/* Contra-escalado para que el texto NO se estire */
+.lb-entry:hover > *, .lb-entry.selected > * {
+  transform: scaleY(0.5);
+}
+
+/* 3. NIVELES DE TAMAÑO ORIGINAL Y CONTENIDO */
+.lb-entry .lb-avatar { display: none; transition: transform 0.3s; }
+.lb-entry .lb-name { font-size: 0.75rem; opacity: 0.7; transition: transform 0.3s; }
+
 .lb-entry[data-rank="5"], .lb-entry[data-rank="6"], 
 .lb-entry[data-rank="7"], .lb-entry[data-rank="8"] {
   height: 42px;
-  padding: 0 .7rem;
-  /* Quitamos el !important del background y border */
   background: rgba(0,0,0,0.2);
-  border-style: solid;
-  border-width: 1.5px;
+  border: 1.5px solid transparent;
 }
 .lb-entry[data-rank="5"] .lb-avatar, .lb-entry[data-rank="6"] .lb-avatar, 
 .lb-entry[data-rank="7"] .lb-avatar, .lb-entry[data-rank="8"] .lb-avatar { 
-  display: block; 
-  width: 1.8rem; 
-  height: 1.8rem; 
-}
-.lb-entry[data-rank="5"] .lb-name, .lb-entry[data-rank="6"] .lb-name, 
-.lb-entry[data-rank="7"] .lb-name, .lb-entry[data-rank="8"] .lb-name { 
-  font-size: 0.82rem; 
-  opacity: 1; 
+  display: block; width: 1.8rem; height: 1.8rem; 
 }
 
-/* 3. NIVEL 1: TOP 4 (Pos 1 a 4) */
 .lb-entry.top4 {
-  height: 55px !important; /* Mantenemos la altura */
+  height: 55px !important;
   padding: 0 .8rem;
-  /* El fondo lo pondrá el JS */
 }
 .lb-entry.top4 .lb-avatar { 
-  display: block; 
-  width: 2.5rem; 
-  height: 2.5rem; 
+  display: block; width: 2.5rem; height: 2.5rem; 
 }
-.lb-entry.top4 .lb-name { 
-  font-size: 0.9rem; 
-  opacity: 1; 
-  font-weight: 700;
-}
+.lb-entry.top4 .lb-name { font-size: 0.9rem; opacity: 1; font-weight: 700; }
 
 .lb-rank{font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--text-muted);min-width:1.5rem;text-align:center;line-height:1}
 .lb-avatar{border-radius:50%;overflow:hidden;border:1.5px solid rgba(255,255,255,.08);
