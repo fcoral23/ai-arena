@@ -245,16 +245,32 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 ══════════════════════════════════════════ */
 .bottom-split {
   display: grid;
-  grid-template-columns: 320px 1fr; /* Mantiene el ranking a la izquierda y la tabla a la derecha */
+  /* Ajustamos a 300px para dar un poco más de aire a la tabla de puntos */
+  grid-template-columns: 300px 1fr; 
   gap: 1.5rem;
-  align-items: start;
+  /* CAMBIADO: stretch obliga a que el ranking y la tabla midan exactamente lo mismo de alto */
+  align-items: stretch; 
   margin-bottom: 3rem;
   
-  /* NUEVO: Esto fuerza a que el grupo de tablas no se estire más que el video */
   max-width: 960px; 
   margin-left: auto;
   margin-right: auto;
   width: 100%;
+}
+
+/* OPCIONAL: Añade esto para que el ranking use todo el alto disponible */
+.lb-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.lb-column {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  /* Esto distribuye el espacio sobrante entre las 16 filas */
+  justify-content: flex-start; 
 }
 
 /* Ajuste opcional para que la tabla de la derecha no se desborde */
