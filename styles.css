@@ -1,90 +1,122 @@
-/* ── Reset & Root ── */
+/* ── CONFIGURACIÓN BASE ── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root{
-  --red:#D42020;--red-light:#FF4444;--red-dim:#8B1010;--red-glow:rgba(212,32,32,.45);
+  --red:#D42020;--red-light:#FF4444;--red-glow:rgba(212,32,32,.45);
   --bg:#000000;--bg-card:#131316;--bg-surface:#1A1A1F;
   --border:rgba(212,32,32,.2);--border-hi:rgba(212,32,32,.45);
   --text:#F0EDE6;--text-muted:#8A8782;
 }
 
-@property --ba { syntax: '<angle>'; initial-value: 0deg; inherits: false; }
-@keyframes border-run { to { --ba: 360deg; } }
-
-html{scroll-behavior:smooth}
-body{font-family:'Exo 2',sans-serif;font-size:16px;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-body::before{content:'';position:fixed;inset:0;
-  background:radial-gradient(ellipse 70% 45% at 50% -5%,rgba(212,32,32,.09) 0%,transparent 65%),
-             radial-gradient(ellipse 35% 35% at 85% 85%,rgba(212,32,32,.04) 0%,transparent 60%);
-  pointer-events:none;z-index:0}
-
-.container{max-width:960px; margin:0 auto;padding:0 1.5rem;position:relative;z-index:1}
-
-/* ── Header ── */
-header{padding:3rem 0 1.2rem;text-align:center}
-.logo-wrap img{max-width:360px;width:80vw;height:auto}
-.edition-badge{display:inline-block;border:.5px solid var(--border-hi);padding:.3rem 1.1rem;border-radius:2rem;margin-top:1.9rem;
-  font-family:'Rajdhani',sans-serif;font-size:.82rem;color:var(--red-light);letter-spacing:.2em;text-transform:uppercase}
-.divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--red),transparent);margin:1.2rem auto}
-
-/* ── Info strip ── */
-.info-strip{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;padding-bottom:2rem}
-.info-chip{background:var(--bg-card);border:.5px solid var(--border);border-radius:.5rem;padding:.65rem 1.1rem}
-.info-chip .label{color:var(--text-muted);font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;font-family:'Rajdhani',sans-serif}
-.info-chip .value{color:var(--text);font-weight:500;font-size:.9rem}
-
-/* ── Arena ── */
-.arena-section{width:100%;background:var(--bg-card);border:.5px solid var(--border);border-radius:.75rem;padding:1rem .5rem 2rem;margin-bottom:2rem}
-.arena-row{position:relative;display:flex;align-items:center;justify-content:center;min-height:500px}
-
-.arena-col-left{display:flex;flex-direction:column;justify-content:center;gap:4.5rem;align-items:flex-end;position:relative;z-index:5;transform:translateX(-90px)}
-.arena-col-right{display:flex;flex-direction:column;justify-content:center;gap:4.5rem;align-items:flex-start;position:relative;z-index:5;transform:translateX(90px)}
-
-.cat-label{font-family:'Rajdhani',sans-serif;font-size:1.35rem;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--red-light);text-shadow:0 0 10px var(--red-glow);padding-top:.3rem}
-.slots-row{display:flex;align-items:flex-end}
-.slot-wrap{position:relative;display:inline-block;cursor:pointer;flex-shrink:0;margin-left:-50px}
-.slots-row .slot-wrap:first-child{margin-left:0}
-.slot-wrap img{display:block;height:130px;width:auto;transition:filter .2s}
-.slot-wrap.active img{filter:drop-shadow(0 0 10px rgba(255,68,68,.7))}
-
-/* ── Center Display CORREGIDO ── */
-.center-display{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);height:500px;width:900px;background:#000;border-radius:.5rem;overflow:hidden;z-index:0}
-.center-char-img{position:absolute;bottom:0;left:50%;transform:translateX(-50%);height:90%;width:auto;opacity:0;transition:opacity .5s ease;z-index:1}
-.center-char-img.visible{opacity:1}
-.center-overlays{position:absolute;inset:0;z-index:10;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none}
-.team-name-display{font-family:'Rajdhani',sans-serif;font-size:1.5rem;font-weight:700;text-transform:uppercase;text-align:center;color:#fff;text-shadow:0 0 12px rgba(255,0,0,0.8);opacity:0;transition:opacity .3s;z-index:100}
-.team-name-display.visible{opacity:1 !important}
-
-/* ── Leaderboard CORREGIDO (Círculos restaurados) ── */
-.bottom-split{display:grid;grid-template-columns:300px 1fr;gap:1.5rem;margin:0 auto 3rem;max-width:960px}
-.lb-entry{height:32px;display:flex;align-items:center;gap:1rem;padding:0 1rem;background:rgba(255,255,255,0.02);border-radius:.4rem;margin-bottom:4px;transition:all .3s}
-.lb-entry.top4{height:58px !important}
-.lb-entry:hover, .lb-entry.selected{height:48px;background:rgba(255,255,255,0.05)}
-.lb-entry.top4:hover, .lb-entry.top4.selected{height:87px !important}
-
-/* El círculo del avatar */
-.lb-avatar{display:none !important; border-radius:50% !important; width:38px; height:38px; object-fit:cover; border:2px solid var(--red-light)}
-.lb-entry:hover .lb-avatar, .lb-entry.selected .lb-avatar{display:block !important}
-.lb-entry.top4:hover .lb-avatar, .lb-entry.top4.selected .lb-avatar{width:70px !important; height:70px !important}
-
-.lb-rank{font-family:'Rajdhani';font-weight:800;color:var(--red-light)}
-.lb-name{font-family:'Rajdhani';font-weight:700;text-transform:uppercase;font-size:.9rem}
-
-/* ── Tabla ── */
-.detail-table-wrap{background:var(--bg-card);border:.5px solid var(--border);border-radius:.75rem;overflow-x:auto}
-.detail-table{border-collapse:collapse;width:100%;font-family:'Rajdhani';font-size:.82rem;white-space:nowrap}
-.detail-table th{background:rgba(212,32,32,.12);color:var(--red-light);padding:.65rem .9rem;text-transform:uppercase}
-.detail-table td{padding:.55rem .9rem;border-bottom:.5px solid rgba(255,255,255,.04);color:var(--text);text-align:center}
-
-/* ── MOBILE FIX DEFINITIVO ── */
-@media (max-width: 860px) {
-  .arena-row{flex-direction:column;height:auto;min-height:auto;gap:1rem}
-  .arena-col-left, .arena-col-right{transform:none !important;width:100%;align-items:center !important;gap:1rem !important}
-  .center-display{position:relative !important;transform:none !important;left:0 !important;top:0 !important;width:100% !important;height:300px !important;order:-1;margin-bottom:1rem}
-  .slot-wrap img{height:90px !important}
-  .bottom-split{grid-template-columns:1fr !important;padding:0 15px}
-  .lb-entry.top4:hover{height:70px !important}
-  .lb-entry.top4:hover .lb-avatar{width:50px !important; height:50px !important}
+body{
+  font-family:'Exo 2',sans-serif;background:var(--bg);color:var(--text);
+  overflow-x:hidden;min-height:100vh;
 }
 
-footer{border-top:.5px solid var(--border);padding:2rem 0;text-align:center;font-size:.75rem;color:var(--text-muted);text-transform:uppercase}
+/* Fondo con resplandor */
+body::before{
+  content:'';position:fixed;inset:0;
+  background:radial-gradient(ellipse 70% 45% at 50% -5%,rgba(212,32,32,.09) 0%,transparent 65%);
+  pointer-events:none;z-index:0;
+}
+
+.container{max-width:960px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:1}
+
+/* ── HEADER & VIDEO (Mantenemos tamaño original) ── */
+header{padding:3rem 0 1.2rem;text-align:center}
+.logo-wrap img{max-width:360px;width:80vw;height:auto}
+
+.video-wrap{
+  background:var(--bg-card);border:.5px solid var(--border);
+  border-radius:.75rem;overflow:hidden;margin-bottom:2.5rem;width:100%;
+}
+/* El video ocupará el ancho total del contenedor */
+iframe.yt-iframe{width:100%;aspect-ratio:16/9;display:block;border:none}
+
+/* ── ARENA DE PERSONAJES ── */
+.arena-section{
+  background:var(--bg-card);border:.5px solid var(--border);
+  border-radius:.75rem;padding:2rem 1rem;margin-bottom:2rem;
+}
+
+.arena-row{
+  position:relative;display:flex;align-items:center;justify-content:center;
+  min-height:450px;width:100%;
+}
+
+/* Posicionamiento PC */
+.arena-col-left{display:flex;flex-direction:column;gap:3rem;align-items:flex-end;transform:translateX(-80px);z-index:5}
+.arena-col-right{display:flex;flex-direction:column;gap:3rem;align-items:flex-start;transform:translateX(80px);z-index:5}
+
+.slots-row{display:flex;align-items:flex-end}
+.slot-wrap{position:relative;margin-left:-45px;cursor:pointer}
+.slot-wrap:first-child{margin-left:0}
+.slot-wrap img{height:120px;width:auto;transition:filter .3s}
+.slot-wrap.active img{filter:drop-shadow(0 0 15px var(--red-light))}
+
+/* Pantalla Central Negra */
+.center-display{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  height:400px;width:100%;max-width:850px;
+  background:#000;border-radius:.5rem;z-index:0;overflow:hidden;
+}
+.center-char-img{
+  position:absolute;bottom:0;left:50%;transform:translateX(-50%);
+  height:95%;width:auto;opacity:0;transition:opacity .4s ease;
+}
+.center-char-img.visible{opacity:1}
+
+/* ── RANKING Y TABLA ── */
+.bottom-split{display:grid;grid-template-columns:320px 1fr;gap:2rem;margin-top:2rem}
+
+/* CÍRCULOS DEL RANKING - IMPORTANTE */
+.lb-entry{
+  display:flex;align-items:center;gap:1rem;padding:.5rem 1rem;
+  background:rgba(255,255,255,0.03);border-radius:.5rem;margin-bottom:.5rem;
+  transition:all .3s ease;min-height:45px;
+}
+.lb-entry.top4{min-height:65px}
+
+.lb-avatar{
+  width:40px;height:40px;border-radius:50% !important; /* FORZAR CÍRCULO */
+  object-fit:cover;border:2px solid var(--red);
+  display:none; /* Se oculta por defecto */
+}
+
+/* Mostrar avatar al seleccionar o hover */
+.lb-entry:hover .lb-avatar, .lb-entry.selected .lb-avatar{display:block !important}
+.lb-entry.top4:hover .lb-avatar, .lb-entry.top4.selected .lb-avatar{width:60px;height:60px}
+
+.lb-name{font-family:'Rajdhani';font-weight:700;text-transform:uppercase}
+
+/* Tabla de puntos */
+.detail-table-wrap{background:var(--bg-card);border:.5px solid var(--border);border-radius:.75rem;overflow-x:auto}
+.detail-table{width:100%;border-collapse:collapse;font-family:'Rajdhani';font-size:.85rem}
+.detail-table th{background:rgba(212,32,32,0.15);color:var(--red-light);padding:.8rem}
+.detail-table td{padding:.7rem;text-align:center;border-bottom:.5px solid rgba(255,255,255,0.05)}
+
+/* ── MÓVIL (EL "FIX" REAL) ── */
+@media (max-width: 860px) {
+  /* Video se ajusta al ancho del cel */
+  .container{padding:0 10px}
+  
+  /* Arena vertical para que no se encimen personajes */
+  .arena-row{flex-direction:column;min-height:auto;gap:2rem}
+  .arena-col-left, .arena-col-right{transform:none !important;align-items:center !important;width:100%}
+  
+  /* Personajes en móvil */
+  .slot-wrap img{height:85px !important}
+  .slot-wrap{margin-left:-20px}
+  
+  /* Display central en móvil */
+  .center-display{
+    position:relative !important;transform:none !important;left:0 !important;top:0 !important;
+    height:250px !important;order:-1; /* Marcador arriba */
+  }
+
+  /* Ranking y tabla en columna */
+  .bottom-split{grid-template-columns:1fr !important}
+  
+  /* Asegurar círculos en móvil */
+  .lb-avatar{width:45px;height:45px;display:block !important}
+}
