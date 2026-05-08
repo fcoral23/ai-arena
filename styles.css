@@ -295,40 +295,63 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 .lb-group-header:first-child{margin-top:0}
 
 /* Estilo base para todas las entradas */
+/* 1. ESTILO BASE: Por defecto todas son pequeñas y sin imagen (Pos 9-16) */
 .lb-entry {
-  display: flex; align-items: center; gap: .7rem;
-  cursor: pointer; transition: all .2s;
-  border-radius: .4rem; border: .5px solid transparent;
-  margin-bottom: 4px; overflow: hidden;
-}
-
-/* NIVEL 1: TOP 4 (Altos y con fondo) */
-.lb-entry.top4 {
-  height: 55px;
-  padding: 0 .8rem;
-}
-.lb-entry.top4 .lb-avatar { width: 2.5rem; height: 2.5rem; }
-
-/* NIVEL 2: MID 4 (Pos 5 a 8 - Medianos con borde) */
-/* Selecciona las posiciones de la 5 a la 8 en el grid */
-.lb-entry:nth-child(n+7):nth-child(-n+10) {
-  height: 42px;
-  padding: 0 .7rem;
-}
-.lb-entry:nth-child(n+7):nth-child(-n+10) .lb-avatar { width: 1.8rem; height: 1.8rem; }
-
-/* NIVEL 3: BOTTOM 8 (Pos 9 a 16 - Bajos y sin imagen) */
-.lb-entry:nth-child(n+11) {
-  height: 30px;
+  display: flex; 
+  align-items: center; 
+  gap: .7rem;
+  cursor: pointer; 
+  transition: all .2s;
+  border-radius: .4rem; 
+  border: none !important;
+  margin-bottom: 4px; 
+  overflow: hidden;
+  height: 30px; /* Altura para los últimos 8 */
   padding: 0 .7rem;
   background: rgba(255,255,255,0.02) !important;
 }
-.lb-entry:nth-child(n+11) .lb-avatar {
-  display: none; /* Quitamos la imagen aquí */
+
+/* Ocultamos avatar por defecto para todos */
+.lb-entry .lb-avatar { display: none; }
+
+/* Texto pequeño por defecto */
+.lb-entry .lb-name { font-size: 0.75rem; opacity: 0.7; }
+
+/* 2. NIVEL 2: MID 4 (Pos 5 a 8) - Forzamos por número de ranking */
+.lb-entry[data-rank="5"], .lb-entry[data-rank="6"], 
+.lb-entry[data-rank="7"], .lb-entry[data-rank="8"] {
+  height: 42px;
+  padding: 0 .7rem;
+  background: rgba(0,0,0,0.2) !important;
+  border: 1.5px solid transparent !important; /* El color lo pone el JS */
 }
-.lb-entry:nth-child(n+11) .lb-name {
-  font-size: 0.75rem;
-  opacity: 0.7;
+.lb-entry[data-rank="5"] .lb-avatar, .lb-entry[data-rank="6"] .lb-avatar, 
+.lb-entry[data-rank="7"] .lb-avatar, .lb-entry[data-rank="8"] .lb-avatar { 
+  display: block; 
+  width: 1.8rem; 
+  height: 1.8rem; 
+}
+.lb-entry[data-rank="5"] .lb-name, .lb-entry[data-rank="6"] .lb-name, 
+.lb-entry[data-rank="7"] .lb-name, .lb-entry[data-rank="8"] .lb-name { 
+  font-size: 0.82rem; 
+  opacity: 1; 
+}
+
+/* 3. NIVEL 1: TOP 4 (Pos 1 a 4) */
+.lb-entry.top4 {
+  height: 55px !important;
+  padding: 0 .8rem;
+  background: transparent !important; /* El color lo pone el JS */
+}
+.lb-entry.top4 .lb-avatar { 
+  display: block; 
+  width: 2.5rem; 
+  height: 2.5rem; 
+}
+.lb-entry.top4 .lb-name { 
+  font-size: 0.9rem; 
+  opacity: 1; 
+  font-weight: 700;
 }
 
 .lb-rank{font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--text-muted);min-width:1.5rem;text-align:center;line-height:1}
