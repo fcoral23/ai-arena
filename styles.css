@@ -258,54 +258,6 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   width: 100%;
 }
 
-
-
-/* --- ADAPTACIÓN PARA MÓVILES --- */
-@media (max-width: 768px) {
-  .bottom-split {
-    /* Pasamos de 2 columnas a 1 sola columna */
-    grid-template-columns: 1fr;
-    gap: 2rem;
-    padding: 0 10px; /* Margen pequeño para que no toque los bordes del móvil */
-  }
-
-  /* El Ranking ocupará el 100% del ancho */
-  .lb-panel {
-    width: 100%;
-    max-width: 100%;
-  }
-
-  /* Ajustamos el tamaño de las fuentes para que quepan en pantallas pequeñas */
-  .lb-entry .lb-name {
-    font-size: 0.75rem !important;
-  }
-  
-  .lb-entry .lb-pts {
-    font-size: 0.75rem !important;
-  }
-
-  /* Reducimos un poco el crecimiento en móvil para no ocupar toda la pantalla */
-  .lb-entry.top4:hover, .lb-entry.top4.selected { 
-    height: 75px !important; 
-  }
-  
-  .lb-entry.top4:hover .lb-avatar, .lb-entry.top4.selected .lb-avatar {
-    height: 55px !important;
-    width: 55px !important;
-  }
-
-  /* Hacemos que la tabla de la derecha (puntos) tenga scroll horizontal 
-     si es muy ancha, para que no rompa el diseño */
-  .table-container { /* Asegúrate de que este sea el nombre de tu clase de la derecha */
-    overflow-x: auto;
-    width: 100%;
-  }
-}
-
-
-
-
-
 /* OPCIONAL: Añade esto para que el ranking use todo el alto disponible */
 .lb-panel {
   display: flex;
@@ -342,84 +294,44 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
 }
 .lb-group-header:first-child{margin-top:0}
 
-/* Estilo base para todas las entradas */
-  /* 1. ESTILO BASE */
-.lb-entry {
-  display: flex; 
-  align-items: center; 
-  gap: .7rem;
-  cursor: pointer; 
-  /* Transición de altura suave */
-  transition: height 0.3s ease, background 0.2s, box-shadow 0.2s, transform 0.2s;
-  border-radius: .4rem; 
-  margin-bottom: 4px; 
-  position: relative;
-  z-index: 1;
-  overflow: hidden;
-  background: rgba(255,255,255,0.02);
-}
+/* ============================================================
+   LEADERBOARD - CÓDIGO LIMPIO (Crecimiento 1.5x + Mobile)
+   ============================================================ */
 
-/* --- LOGICA DE CRECIMIENTO --- */
-/* Cuando NO está seleccionado ni en hover, usamos alturas base */
-/* Alturas base */
 /* 1. ALTURAS BASE */
 .lb-entry { 
   height: 32px; 
-  transition: height 0.3s cubic-bezier(0.4, 0, 0.2, 1), background 0.2s; 
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); 
   overflow: hidden; 
   display: flex;
   align-items: center;
   gap: 1rem;
   padding: 0 1rem;
   position: relative;
+  background: rgba(255,255,255,0.02);
+  border-radius: .4rem;
+  margin-bottom: 4px;
 } 
 .lb-entry[data-rank="5"], .lb-entry[data-rank="6"], 
 .lb-entry[data-rank="7"], .lb-entry[data-rank="8"] { height: 45px; }
 .lb-entry.top4 { height: 58px !important; }
 
-/* 2. CRECIMIENTO 1.5x */
-.lb-entry:hover, .lb-entry.selected { z-index: 100; }
+/* 2. CRECIMIENTO 1.5x (Al hacer Hover o Seleccionar) */
+.lb-entry:hover, .lb-entry.selected { z-index: 100; box-shadow: 0 4px 15px rgba(0,0,0,0.3); }
 
-/* 9-16: crece a 48px */
+/* Pos 9-16: crece a 48px */
 .lb-entry:hover, .lb-entry.selected { height: 48px; }
 
-/* 5-8: crece a 68px */
+/* Pos 5-8: crece a 68px */
 .lb-entry[data-rank="5"]:hover, .lb-entry[data-rank="5"].selected,
 .lb-entry[data-rank="6"]:hover, .lb-entry[data-rank="6"].selected,
 .lb-entry[data-rank="7"]:hover, .lb-entry[data-rank="7"].selected,
 .lb-entry[data-rank="8"]:hover, .lb-entry[data-rank="8"].selected { height: 68px; }
 
-/* 1-4: crece a 87px */
+/* Pos 1-4: crece a 87px */
 .lb-entry.top4:hover, .lb-entry.top4.selected { height: 87px !important; }
 
-/* 3. AVATAR CIRCULAR (Solo aparece al interactuar) */
-/* 1. ESTADO BASE: NADIE TIENE IMAGEN */
-/* 1. LÓGICA BASE DEL AVATAR */
-.lb-entry .lb-avatar { 
-  display: none !important; /* Oculto por defecto */
-  border-radius: 50% !important;
-  aspect-ratio: 1/1;
-  object-fit: cover;
-  flex-shrink: 0;
-  border: 2px solid rgba(255,255,255,0.3);
-}
-
-/* 2. REVELADO AL ACTIVAR */
-.lb-entry:hover .lb-avatar, 
-.lb-entry.selected .lb-avatar {
-  display: block !important;
-}
-
-/* 3. TAMAÑOS REASIGNADOS (Llenando el espacio vertical de la fila expandida) */
-
-/* Nivel 1: TOP 4 (La imagen más grande, llenando la fila de 87px) */
-.lb-entry.top4:hover .lb-avatar, 
-.lb-entry.top4.selected .lb-avatar {
-  height: 70px; 
-  width: 70px;
-}
-
-/* 1. LÓGICA BASE DEL AVATAR */
+/* 3. LÓGICA DE AVATARES (Solo aparecen en hover/selected) */
 .lb-entry .lb-avatar { 
   display: none !important; 
   border-radius: 50% !important;
@@ -429,141 +341,35 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   border: 2px solid rgba(255,255,255,0.3);
 }
 
-/* 2. REVELADO AL ACTIVAR */
-.lb-entry:hover .lb-avatar, 
-.lb-entry.selected .lb-avatar {
-  display: block !important;
-}
+.lb-entry:hover .lb-avatar, .lb-entry.selected .lb-avatar { display: block !important; }
 
-/* 3. TAMAÑOS CORREGIDOS (De mayor a menor) */
-
-/* TOP 4 (Pos 1-4): Imagen GRANDE (70px) */
-.lb-entry.top4:hover .lb-avatar, 
-.lb-entry.top4.selected .lb-avatar {
-  height: 70px !important; 
-  width: 70px !important;
-}
-
-/* MID 4 (Pos 5-8): Imagen MEDIANA (50px) */
+/* Tamaños de imagen corregidos */
+.lb-entry.top4:hover .lb-avatar, .lb-entry.top4.selected .lb-avatar { height: 70px !important; width: 70px !important; }
 .lb-entry[data-rank="5"]:hover .lb-avatar, .lb-entry[data-rank="5"].selected .lb-avatar,
 .lb-entry[data-rank="6"]:hover .lb-avatar, .lb-entry[data-rank="6"].selected .lb-avatar,
 .lb-entry[data-rank="7"]:hover .lb-avatar, .lb-entry[data-rank="7"].selected .lb-avatar,
-.lb-entry[data-rank="8"]:hover .lb-avatar, .lb-entry[data-rank="8"].selected .lb-avatar {
-  height: 50px !important;
-  width: 50px !important;
-}
+.lb-entry[data-rank="8"]:hover .lb-avatar, .lb-entry[data-rank="8"].selected .lb-avatar { height: 50px !important; width: 50px !important; }
 
-/* BOTTOM 8 (Pos 9-16): Imagen PEQUEÑA (38px) */
-/* Usamos el selector base pero EXCLUIMOS a los de arriba para que no haya conflicto */
 .lb-entry:not(.top4):not([data-rank="5"]):not([data-rank="6"]):not([data-rank="7"]):not([data-rank="8"]):hover .lb-avatar, 
-.lb-entry:not(.top4):not([data-rank="5"]):not([data-rank="6"]):not([data-rank="7"]):not([data-rank="8"]).selected .lb-avatar {
-  height: 38px !important;
-  width: 38px !important;
+.lb-entry:not(.top4):not([data-rank="5"]):not([data-rank="6"]):not([data-rank="7"]):not([data-rank="8"]).selected .lb-avatar { height: 38px !important; width: 38px !important; }
+
+/* 4. TIPOGRAFÍAS Y ADAPTACIÓN MÓVIL */
+.lb-rank { font-weight: 800; font-family: 'Rajdhani'; min-width: 1.5rem; text-align: center; }
+.lb-name { font-weight: 700; text-transform: uppercase; font-family: 'Rajdhani'; }
+.lb-pts { font-family: 'Rajdhani'; font-weight: 800; margin-left: auto; }
+
+@media (max-width: 768px) {
+  .bottom-split {
+    grid-template-columns: 1fr !important; /* Una sola columna */
+    padding: 0 15px;
+  }
+  
+  .lb-entry .lb-name, .lb-entry .lb-pts { font-size: 0.8rem !important; }
+  
+  /* Reducimos un poco el crecimiento en móvil para que no sea gigante */
+  .lb-entry.top4:hover, .lb-entry.top4.selected { height: 70px !important; }
+  .lb-entry.top4:hover .lb-avatar, .lb-entry.top4.selected .lb-avatar { height: 55px !important; width: 55px !important; }
 }
-
-/* --- ALTURAS DE FILA (Se mantienen igual) --- */
-.lb-entry { height: 32px; transition: height 0.3s ease; overflow: hidden; }
-.lb-entry[data-rank="5"], .lb-entry[data-rank="6"], .lb-entry[data-rank="7"], .lb-entry[data-rank="8"] { height: 45px; }
-.lb-entry.top4 { height: 58px !important; }
-
-.lb-entry:hover, .lb-entry.selected { height: 48px; }
-.lb-entry[data-rank="5"]:hover, .lb-entry[data-rank="5"].selected,
-.lb-entry[data-rank="6"]:hover, .lb-entry[data-rank="6"].selected,
-.lb-entry[data-rank="7"]:hover, .lb-entry[data-rank="7"].selected,
-.lb-entry[data-rank="8"]:hover, .lb-entry[data-rank="8"].selected { height: 68px; }
-.lb-entry.top4:hover, .lb-entry.top4.selected { height: 87px !important; }
-
-/* Alturas base y crecimiento (Se mantienen igual para no romper el layout) */
-.lb-entry { height: 32px; transition: height 0.3s ease; overflow: hidden; }
-.lb-entry[data-rank="5"], .lb-entry[data-rank="6"], 
-.lb-entry[data-rank="7"], .lb-entry[data-rank="8"] { height: 45px; }
-.lb-entry.top4 { height: 58px !important; }
-
-.lb-entry:hover, .lb-entry.selected { height: 48px; z-index: 10; }
-.lb-entry[data-rank="5"]:hover, .lb-entry[data-rank="5"].selected,
-.lb-entry[data-rank="6"]:hover, .lb-entry[data-rank="6"].selected,
-.lb-entry[data-rank="7"]:hover, .lb-entry[data-rank="7"].selected,
-.lb-entry[data-rank="8"]:hover, .lb-entry[data-rank="8"].selected { height: 68px; }
-.lb-entry.top4:hover, .lb-entry.top4.selected { height: 87px !important; }
-
-/* 3. ALTURAS Y CRECIMIENTO 1.5x */
-.lb-entry { height: 32px; transition: height 0.3s ease; }
-.lb-entry[data-rank="5"], .lb-entry[data-rank="6"], 
-.lb-entry[data-rank="7"], .lb-entry[data-rank="8"] { height: 45px; }
-.lb-entry.top4 { height: 58px !important; }
-
-/* Aplicamos el 1.5x real */
-.lb-entry:hover, .lb-entry.selected { height: 48px; z-index: 10; }
-
-.lb-entry[data-rank="5"]:hover, .lb-entry[data-rank="5"].selected,
-.lb-entry[data-rank="6"]:hover, .lb-entry[data-rank="6"].selected,
-.lb-entry[data-rank="7"]:hover, .lb-entry[data-rank="7"].selected,
-.lb-entry[data-rank="8"]:hover, .lb-entry[data-rank="8"].selected { 
-  height: 68px; 
-}
-
-.lb-entry.top4:hover, .lb-entry.top4.selected { 
-  height: 87px !important; 
-}
-
-/* --- ESCALADO DE CONTENIDO --- */
-.lb-entry .lb-avatar { 
-  width: 1.5rem; height: 1.5rem; 
-  transition: width 0.3s, height 0.3s; 
-}
-.lb-entry:hover .lb-avatar, .lb-entry.selected .lb-avatar {
-  width: 4rem; height: 4rem; /* La imagen crece proporcionalmente */
-}
-
-/* Tipografías base */
-.lb-rank { font-weight: 800; font-family: 'Rajdhani'; }
-.lb-name { font-weight: 700; text-transform: uppercase; }
-.lb-pts { font-family: 'Rajdhani'; font-weight: 800; white-space: nowrap; }
-
-/* Ajuste de fuentes al crecer */
-.lb-entry:hover .lb-name, .lb-entry.selected .lb-name { font-size: 1.5rem !important; }
-.lb-entry:hover .lb-rank, .lb-entry.selected .lb-rank { font-size: 1.8rem !important; }
-.lb-entry:hover .lb-pts, .lb-entry.selected .lb-pts { font-size: 1.5rem !important; }
-
-/* Ocultar el "Pts" pequeño antiguo si existía en el HTML */
-.lb-pts-label { display: none; }
-
-/* 3. NIVELES DE TAMAÑO ORIGINAL Y CONTENIDO */
-.lb-entry .lb-avatar { display: none; transition: transform 0.3s; }
-.lb-entry .lb-name { font-size: 0.75rem; opacity: 0.7; transition: transform 0.3s; }
-
-.lb-entry[data-rank="5"], .lb-entry[data-rank="6"], 
-.lb-entry[data-rank="7"], .lb-entry[data-rank="8"] {
-  height: 42px;
-  background: rgba(0,0,0,0.2);
-  border: 1.5px solid transparent;
-}
-.lb-entry[data-rank="5"] .lb-avatar, .lb-entry[data-rank="6"] .lb-avatar, 
-.lb-entry[data-rank="7"] .lb-avatar, .lb-entry[data-rank="8"] .lb-avatar { 
-  display: block; width: 1.8rem; height: 1.8rem; 
-}
-
-.lb-entry.top4 {
-  height: 55px !important;
-  padding: 0 .8rem;
-}
-.lb-entry.top4 .lb-avatar { 
-  display: block; width: 2.5rem; height: 2.5rem; 
-}
-.lb-entry.top4 .lb-name { font-size: 0.9rem; opacity: 1; font-weight: 700; }
-
-.lb-rank{font-family:'Rajdhani',sans-serif;font-weight:700;color:var(--text-muted);min-width:1.5rem;text-align:center;line-height:1}
-.lb-avatar{border-radius:50%;overflow:hidden;border:1.5px solid rgba(255,255,255,.08);
-  background:var(--bg-surface);flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Rajdhani',sans-serif;font-weight:700;font-size:.7rem;color:var(--text-muted)}
-.lb-avatar img{width:100%;height:100%;object-fit:cover;display:block}
-.lb-info{flex:1;min-width:0}
-.lb-name{font-family:'Rajdhani',sans-serif;font-weight:600;letter-spacing:.03em;
-  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text)}
-.lb-pts{font-family:'Rajdhani',sans-serif;font-weight:700;line-height:1;color:var(--text);white-space:nowrap}
-.lb-pts-label{font-size:.58rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:.1em;font-family:'Rajdhani',sans-serif}
-
 /* ── Tabla de puntos ── */
 .pts-panel{min-width:0}
 .detail-table-wrap{
