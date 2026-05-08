@@ -185,16 +185,12 @@ document.getElementById('choose-text').style.opacity='0';
     const req = slotMap[s];
     
     if (s === slot) {
-      // 1. Añadimos la clase para que el CSS aumente el tamaño (height: 100px)
-      row.classList.add('selected'); 
+      row.classList.add('selected'); // Activa crecimiento + imagen circular
     } else {
-      // 2. Quitamos la clase para que vuelva a su tamaño original
-      row.classList.remove('selected');
+      row.classList.remove('selected'); // Oculta imagen + tamaño normal
     }
     
-    // 3. Llamamos a la función de estilos para que aplique los colores 
-    // y fuentes según el ranking (sin importar si está seleccionado o no)
-    applyLbRowStyle(row, req, false);
+    applyLbRowStyle(row, req, s === slot);
 });
 
   /* Highlight tabla */
@@ -242,37 +238,32 @@ function applyLbRowStyle(row, eq, force) {
   const rank = parseInt(row.dataset.rank);
   const ia = IA[eq.ia] || DEF;
   
-  // 1. Unificar Puntos + PTS
+  // Sincronizar Puntos
   const puntosValor = eq.pts || eq.puntos || 0; 
   const ptsEl = row.querySelector('.lb-pts');
-  if (ptsEl) {
-    ptsEl.textContent = puntosValor + " PTS";
-  }
+  if (ptsEl) ptsEl.textContent = puntosValor + " PTS";
 
-  // 2. Estilos de fuente y colores (Ajustados para 1.5x)
+  // Reset de bordes para evitar herencias
+  row.style.border = 'none';
+
   if (rank <= 4) {
     row.style.setProperty('background', ia.color, 'important');
-    row.style.boxShadow = '0 0 10px ' + ia.glow2;
-    // Fuentes Top 4
-    row.querySelector('.lb-name').style.fontSize = "1rem";
-    row.querySelector('.lb-pts').style.fontSize = "1rem";
-    row.querySelector('.lb-rank').style.fontSize = "1.2rem";
-    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => el.style.color = '#000');
-    
+    row.querySelectorAll('.lb-name, .lb-rank, .lb-pts').forEach(el => {
+      el.style.color = '#000';
+      el.style.fontSize = "1rem";
+    });
+    row.querySelector('.lb-rank').style.fontSize = "1.1rem";
   } else if (rank <= 8) {
     row.style.setProperty('background', 'rgba(0,0,0,0.5)', 'important');
     row.style.setProperty('border', `1.5px solid ${ia.color}`, 'important');
-    // Fuentes Mid 4
-    row.querySelector('.lb-name').style.fontSize = "0.9rem";
-    row.querySelector('.lb-pts').style.fontSize = "0.9rem";
-    row.querySelector('.lb-rank').style.fontSize = "1rem";
+    row.querySelectorAll('.lb-name, .lb-pts').forEach(el => {
+      el.style.color = '#fff';
+      el.style.fontSize = "0.9rem";
+    });
     row.querySelector('.lb-rank').style.color = ia.color;
-    row.querySelectorAll('.lb-name, .lb-pts').forEach(el => el.style.color = '#fff');
-
+    row.querySelector('.lb-rank').style.fontSize = "1rem";
   } else {
     row.style.setProperty('background', 'rgba(255,255,255,0.04)', 'important');
-    row.style.border = 'none';
-    // Fuentes Bottom 8
     const sizeB = "0.85rem";
     row.querySelector('.lb-name').style.fontSize = sizeB;
     row.querySelector('.lb-pts').style.fontSize = sizeB;
