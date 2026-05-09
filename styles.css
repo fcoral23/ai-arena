@@ -106,7 +106,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   display:flex;flex-direction:column;justify-content:center;
   gap:4.5rem;align-items:flex-end;
   position:relative;z-index:5;
-  transform:translateX(-90px);
+  transform:translateX(-160px);
 
 }
 
@@ -114,7 +114,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   display:flex;flex-direction:column;justify-content:center;
   gap:4.5rem;align-items:flex-start;
   position:relative;z-index:5;
-  transform:translateX(90px);
+  transform:translateX(160px);
 
 }
 
@@ -155,7 +155,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   cursor:pointer;
   flex-shrink:0;
   /* cada slot se monta sobre el anterior */
-  margin-left:-50px;
+  margin-left:-62px;
 }
 .slots-row .slot-wrap:first-child{margin-left:0}
 
