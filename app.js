@@ -409,7 +409,6 @@ function renderCompetitors() {
     lbl.addEventListener('click', (e) => {
       if (!isMobile()) return;
       e.stopPropagation();
-      stopAllPulsing();
       setMobActiveGroup(group);
     });
 
