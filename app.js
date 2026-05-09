@@ -113,6 +113,7 @@ function playHoverSound() {
    STATE
 ══════════════════════════════════════════════════════════════ */
 let selectedSlot = null;
+let expandedGroup = null;
 const slotMap = {};
 
 /* ══════════════════════════════════════════════════════════════
@@ -204,6 +205,11 @@ document.getElementById('choose-text').style.opacity='0';
 ══════════════════════════════════════════════════════════════ */
 function selectSlot(slot) {
   showSlot(slot);
+  // En móvil: cerrar el grupo activo tras seleccionar un slot
+  if (isMobile() && activeMobGroup) {
+    activeMobGroup.classList.remove('mob-active');
+    activeMobGroup = null;
+  }
 }
 
 
@@ -291,6 +297,15 @@ document.querySelectorAll('.lb-entry').forEach(row => {
 /* ══════════════════════════════════════════════════════════════
    BUILD SLOT CARD
 ══════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   COLLAPSE ALL
+══════════════════════════════════════════════════════════════ */
+function collapseAll() {
+  document.querySelectorAll('.slots-row.expanded').forEach(r => r.classList.remove('expanded'));
+  document.querySelectorAll('.cat-group.expanded').forEach(g => g.classList.remove('expanded'));
+  expandedGroup = null;
+}
+
 function buildCard(eq) {
   const wrap = document.createElement('div');
   wrap.className    = 'slot-wrap';
@@ -308,15 +323,45 @@ function buildCard(eq) {
   };
 
   wrap.appendChild(img);
-  wrap.addEventListener('mouseenter', () => selectSlot(eq.slot));
-  wrap.addEventListener('mouseleave', deselect);
-  wrap.addEventListener('click', () => selectSlot(eq.slot));
+  const isTouch = () => window.matchMedia('(hover:none)').matches;
+
+  wrap.addEventListener('mouseenter', () => {
+    if (!isTouch()) selectSlot(eq.slot);
+  });
+  wrap.addEventListener('mouseleave', () => {
+    if (!isTouch()) deselect();
+  });
+  wrap.addEventListener('click', (e) => {
+    e.stopPropagation();
+    selectSlot(eq.slot);
+  });
   return wrap;
 }
 
 /* ══════════════════════════════════════════════════════════════
    RENDER: ARENA
 ══════════════════════════════════════════════════════════════ */
+function isMobile() {
+  return window.matchMedia('(max-width:640px)').matches;
+}
+
+let activeMobGroup = null;
+
+function setMobActiveGroup(group) {
+  // Desactivar grupo anterior
+  if (activeMobGroup && activeMobGroup !== group) {
+    activeMobGroup.classList.remove('mob-active');
+  }
+  // Activar nuevo grupo (toggle: click en el mismo lo cierra)
+  if (activeMobGroup === group) {
+    group.classList.remove('mob-active');
+    activeMobGroup = null;
+  } else {
+    group.classList.add('mob-active');
+    activeMobGroup = group;
+  }
+}
+
 function renderCompetitors() {
   DATA.equipos.forEach(e => { slotMap[e.slot] = e; });
 
@@ -336,6 +381,14 @@ function renderCompetitors() {
     const lbl = document.createElement('div');
     lbl.className   = 'cat-label';
     lbl.textContent = cat.label;
+
+    // En móvil: click en label activa/desactiva el grupo
+    lbl.addEventListener('click', (e) => {
+      if (!isMobile()) return;
+      e.stopPropagation();
+      setMobActiveGroup(group);
+    });
+
     group.appendChild(lbl);
     col.appendChild(group);
   });
@@ -452,8 +505,20 @@ function renderPage() {
 /* ══════════════════════════════════════════════════════════════
    INIT
 ══════════════════════════════════════════════════════════════ */
-window.selectSlot = selectSlot;
-window.deselect   = deselect;
+window.selectSlot  = selectSlot;
+window.deselect    = deselect;
+window.collapseAll = collapseAll;
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.arena-section')) {
+    collapseAll();
+    // En móvil: cerrar grupo activo si click fuera
+    if (isMobile() && activeMobGroup) {
+      activeMobGroup.classList.remove('mob-active');
+      activeMobGroup = null;
+    }
+  }
+});
 
 loadData().then(() => {
   renderPage();
