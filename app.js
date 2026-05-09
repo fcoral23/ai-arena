@@ -213,6 +213,10 @@ document.getElementById('choose-text').style.opacity='0';
 ══════════════════════════════════════════════════════════════ */
 function selectSlot(slot) {
   showSlot(slot);
+  if (isMobile() && activeMobGroup) {
+    activeMobGroup.classList.remove('mob-active');
+    activeMobGroup = null;
+  }
 }
 
 
@@ -344,6 +348,25 @@ function buildCard(eq) {
 /* ══════════════════════════════════════════════════════════════
    RENDER: ARENA
 ══════════════════════════════════════════════════════════════ */
+function isMobile() {
+  return window.matchMedia('(max-width:640px)').matches;
+}
+
+let activeMobGroup = null;
+
+function setMobActiveGroup(group) {
+  if (activeMobGroup && activeMobGroup !== group) {
+    activeMobGroup.classList.remove('mob-active');
+  }
+  if (activeMobGroup === group) {
+    group.classList.remove('mob-active');
+    activeMobGroup = null;
+  } else {
+    group.classList.add('mob-active');
+    activeMobGroup = group;
+  }
+}
+
 function renderCompetitors() {
   DATA.equipos.forEach(e => { slotMap[e.slot] = e; });
 
@@ -363,6 +386,13 @@ function renderCompetitors() {
     const lbl = document.createElement('div');
     lbl.className   = 'cat-label';
     lbl.textContent = cat.label;
+
+    lbl.addEventListener('click', (e) => {
+      if (!isMobile()) return;
+      e.stopPropagation();
+      setMobActiveGroup(group);
+    });
+
     group.appendChild(lbl);
     col.appendChild(group);
   });
@@ -484,7 +514,13 @@ window.deselect    = deselect;
 window.collapseAll = collapseAll;
 
 document.addEventListener('click', (e) => {
-  if (!e.target.closest('.arena-section')) collapseAll();
+  if (!e.target.closest('.arena-section')) {
+    collapseAll();
+    if (isMobile() && activeMobGroup) {
+      activeMobGroup.classList.remove('mob-active');
+      activeMobGroup = null;
+    }
+  }
 });
 
 /* ── Modal de bienvenida ── */
