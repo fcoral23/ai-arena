@@ -113,6 +113,7 @@ function playHoverSound() {
    STATE
 ══════════════════════════════════════════════════════════════ */
 let selectedSlot = null;
+let expandedGroup = null;
 const slotMap = {};
 
 /* ══════════════════════════════════════════════════════════════
@@ -291,6 +292,15 @@ document.querySelectorAll('.lb-entry').forEach(row => {
 /* ══════════════════════════════════════════════════════════════
    BUILD SLOT CARD
 ══════════════════════════════════════════════════════════════ */
+/* ══════════════════════════════════════════════════════════════
+   COLLAPSE ALL
+══════════════════════════════════════════════════════════════ */
+function collapseAll() {
+  document.querySelectorAll('.slots-row.expanded').forEach(r => r.classList.remove('expanded'));
+  document.querySelectorAll('.cat-group.expanded').forEach(g => g.classList.remove('expanded'));
+  expandedGroup = null;
+}
+
 function buildCard(eq) {
   const wrap = document.createElement('div');
   wrap.className    = 'slot-wrap';
@@ -308,9 +318,30 @@ function buildCard(eq) {
   };
 
   wrap.appendChild(img);
-  wrap.addEventListener('mouseenter', () => selectSlot(eq.slot));
-  wrap.addEventListener('mouseleave', deselect);
-  wrap.addEventListener('click', () => selectSlot(eq.slot));
+  const isTouch = () => window.matchMedia('(hover:none)').matches;
+
+  wrap.addEventListener('mouseenter', () => {
+    if (!isTouch()) selectSlot(eq.slot);
+  });
+  wrap.addEventListener('mouseleave', () => {
+    if (!isTouch()) deselect();
+  });
+  wrap.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const row   = wrap.closest('.slots-row');
+    const group = wrap.closest('.cat-group');
+    if (isTouch() && !row.classList.contains('expanded')) {
+      // primer tap: expandir grupo
+      collapseAll();
+      row.classList.add('expanded');
+      group.classList.add('expanded');
+      expandedGroup = row;
+    } else {
+      // desktop o grupo ya abierto: seleccionar
+      selectSlot(eq.slot);
+      if (isTouch()) collapseAll();
+    }
+  });
   return wrap;
 }
 
@@ -452,8 +483,13 @@ function renderPage() {
 /* ══════════════════════════════════════════════════════════════
    INIT
 ══════════════════════════════════════════════════════════════ */
-window.selectSlot = selectSlot;
-window.deselect   = deselect;
+window.selectSlot  = selectSlot;
+window.deselect    = deselect;
+window.collapseAll = collapseAll;
+
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.arena-section')) collapseAll();
+});
 
 loadData().then(() => {
   renderPage();
