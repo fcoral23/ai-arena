@@ -554,169 +554,123 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
 /* ── Responsive ── */
 
 /* ══════════════════════════════════════════════════════════════
-   EXPAND TRANSITION — solo la animación del margin (siempre)
+   MÓVIL ≤640px
+   Layout en columna:
+     Fila 1: [ROBOT encimado] [NATURE encimado]
+     Fila 2: [ANDROID encimado] [UNKNOWN encimado]
+     Centro: position:absolute cubre filas 1 y 2, detrás de slots
+   Slots: mismo encimado que desktop (-45px) pero a 85px de alto.
+   Click directo en slot = carga personaje. Sin expand.
 ══════════════════════════════════════════════════════════════ */
-.slot-wrap {
-  transition: margin-left .3s ease, filter .2s;
-}
-.slots-row.expanded .slot-wrap {
-  margin-left: 4px !important;
-}
-.slots-row.expanded .slot-wrap:first-child {
-  margin-left: 0 !important;
-}
-.cat-group.expanded .cat-label {
-  color: #fff;
-  text-shadow: 0 0 12px var(--red-glow), 0 0 4px var(--red-glow);
-}
 
-/* ══════════════════════════════════════════════════════════════
-   MÓVIL ≤640px  — SOLO afecta móvil, desktop intacto
-══════════════════════════════════════════════════════════════ */
+/* Wrapper: invisible en desktop */
+.arena-cols-wrap { display: contents; }
+
 @media(max-width:640px) {
 
-  /* FIX 3 & 4: arena-row como contenedor relativo de altura fija.
-     center-display y arena-cols-wrap serán hijos absolute. */
-  .arena-row {
-    position: relative;
-    flex-direction: row;       /* reset: hijos absolute, flex-dir no importa */
-    align-items: stretch;
-    justify-content: stretch;
-    min-height: 370px;         /* altura suficiente para personaje + slots */
-    gap: 0;
+  /* Arena-section: sin padding lateral para aprovechar ancho */
+  .arena-section {
+    padding-left: 0;
+    padding-right: 0;
+    padding-bottom: 1rem;
+    overflow: visible;
   }
 
-  /* FIX 2: Wrapper absolute que cubre toda la arena-row, encima del personaje.
-     pointer-events:none aquí para que clicks pasen al body, pero
-     las columnas restauran pointer-events:auto para los slots. */
+  /* Arena-row: columna, con posición relativa para el centro absoluto */
+  .arena-row {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    min-height: auto;
+    position: relative;
+  }
+
+  /* Wrapper de columnas: grid 2x2
+     col-left  → columna izquierda (ROBOT arriba, ANDROID abajo)
+     col-right → columna derecha   (NATURE arriba, UNKNOWN abajo)
+     Las dos columnas en fila, ancho completo */
   .arena-cols-wrap {
     display: grid !important;
     grid-template-columns: 1fr 1fr;
-    gap: 0;
-    position: absolute !important;
-    inset: 0;
-    z-index: 5;
-    padding: .5rem .3rem;
-    box-sizing: border-box;
-    pointer-events: none;
+    grid-template-rows: auto auto;
+    width: 100%;
+    order: 1;
+    position: relative;
+    z-index: 5;              /* slots sobre el personaje */
+    /* padding-bottom reserva el alto del personaje para que
+       los grupos inferiores no tapen al centro */
+    padding-bottom: 280px;
+    padding-left: .3rem;
+    padding-right: .3rem;
   }
 
-  /* FIX 2: Columnas — llenan el alto, distribuyen grupos arriba y abajo.
-     transform:none elimina el translateX(±90px) que las cortaba en móvil. */
+  /* Columnas: flex column, cada una apila sus 2 cat-groups */
   .arena-col-left,
   .arena-col-right {
     display: flex !important;
     flex-direction: column !important;
-    justify-content: space-between;
-    height: 100%;
-    position: relative;
-    overflow: visible;
-    min-width: 0;
-    transform: none !important;   /* reset desktop translateX */
-    pointer-events: auto;
-    gap: 0;
+    gap: .6rem;
+    align-items: flex-start !important;
   }
-  .arena-col-left  { align-items: flex-start !important; }
-  .arena-col-right { align-items: flex-end !important;   }
+  .arena-col-right {
+    align-items: flex-end !important;
+  }
 
-  /* Cat-group — altura proporcional al slot reducido */
+  /* Cat-groups: misma estructura que desktop */
   .cat-group {
-    position: relative;
-    min-height: calc(78px + 1.6rem);
-    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
   }
 
-  /* Slots más pequeños en móvil para que no se solapen entre columnas */
-  .slot-wrap img,
-  .slot-initials { height: 78px; }
-  .slot-initials  { width: 38px; }
-  /* Menor overlap negativo: solo las puntas se cruzan en el centro */
-  .slot-wrap { margin-left: -22px; }
-  .slots-row .slot-wrap:first-child { margin-left: 0; }
+  /* Slots: mismo encimado que desktop pero tamaño reducido */
+  .slots-row { display: flex; align-items: flex-end; }
 
-  /* slots-row absolute dentro de su cat-group */
-  .slots-row {
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
+  .slot-wrap {
+    margin-left: -45px !important;   /* encimado móvil */
   }
-  .arena-col-right .slots-row {
-    left: auto;
-    right: 0;
+  .slots-row .slot-wrap:first-child {
+    margin-left: 0 !important;
   }
 
-  /* FIX 1 (parte A): Labels DEBAJO de sus slots — grupos 1 (ROBOT, NATURE) */
-  .cat-label {
-    position: absolute;
-    bottom: 0;
-    top: auto;
-    left: 0;
-    cursor: pointer;
-    font-size: .8rem;
-    white-space: nowrap;
+  .slot-wrap img {
+    height: 85px !important;
+    width: auto !important;
   }
-  .arena-col-right .cat-label {
-    left: auto;
-    right: 0;
+  .slot-initials {
+    height: 85px !important;
+    width: 50px !important;
   }
 
-  /* FIX 5: Sin flecha de expansión — click selecciona directamente */
-  .cat-label::before { content: '' !important; }
-
-  /* FIX 1 (parte B): ANDROID (col-left grupo 2) y UNKNOWN (col-right grupo 2)
-     → label ARRIBA de sus slots */
-  .arena-col-left .cat-group:nth-child(2) .cat-label,
-  .arena-col-right .cat-group:nth-child(2) .cat-label {
-    top: 0;
-    bottom: auto;
-  }
-  /* Los slots de esos grupos bajan por debajo del label */
-  .arena-col-left .cat-group:nth-child(2) .slots-row,
-  .arena-col-right .cat-group:nth-child(2) .slots-row {
-    top: 1.6rem;
+  /* Labels ROBOT y NATURE: debajo de sus slots (orden natural) */
+  /* Labels ANDROID y UNKNOWN: arriba de sus slots */
+  .arena-col-left  .cat-group:nth-child(2),
+  .arena-col-right .cat-group:nth-child(2) {
+    flex-direction: column-reverse;  /* label sube arriba */
   }
 
-  /* Estado expandido: se conserva el CSS por compatibilidad pero
-     ya no se activa (el click JS ahora selecciona directamente) */
-  .cat-group.expanded { z-index: 50; }
-  .cat-group.expanded .slots-row {
-    background: rgba(0,0,0,.92);
-    border-radius: .5rem;
-    padding: .4rem .5rem;
-    box-shadow: 0 6px 30px rgba(0,0,0,.95);
-    white-space: nowrap;
-    z-index: 50;
-  }
-  .arena-col-right .cat-group.expanded .slots-row {
-    left: auto;
-    right: 0;
-  }
-
-  /* FIX 3 & 4: Centro absolute, detrás de todo (z-index:0), cubre la arena-row.
-     El personaje aparece detrás de los slots, solapando arriba y abajo. */
+  /* Centro: absoluto, se posiciona desde el bottom del wrapper
+     (el padding-bottom del wrapper lo empuja hacia arriba) */
   .center-display {
     position: absolute !important;
-    left: 50% !important;
-    top: 0 !important;
-    transform: translateX(-50%) !important;
-    width: 100% !important;
-    height: 100% !important;
+    bottom: 0 !important;
+    left: .3rem !important;
+    right: .3rem !important;
+    top: auto !important;
+    transform: none !important;
+    width: auto !important;
     max-width: none !important;
-    z-index: 0;
-    margin: 0 !important;
-    border-radius: .5rem;
+    height: 280px !important;
     overflow: hidden !important;
-    order: initial;
+    border-radius: .5rem;
+    z-index: 2;                 /* detrás de los slots */
+    order: 2;
   }
 
-  /* FIX 6: Tablas apiladas verticalmente en móvil */
-  .bottom-split {
-    grid-template-columns: 1fr;
-  }
-}
+  /* ops-bar y design-credit ya están dentro del center-display */
 
-/* Wrapper invisible en desktop (display:contents no afecta layout) */
-.arena-cols-wrap {
-  display: contents;
+  /* Asegurar que arena-row tenga suficiente alto para el absoluto */
+  .arena-row {
+    padding-bottom: 0;
+  }
 }
