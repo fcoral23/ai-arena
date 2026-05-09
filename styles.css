@@ -106,7 +106,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   display:flex;flex-direction:column;justify-content:center;
   gap:4.5rem;align-items:flex-end;
   position:relative;z-index:5;
-  transform:translateX(-160px);
+  transform:translateX(-90px);
 
 }
 
@@ -114,7 +114,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   display:flex;flex-direction:column;justify-content:center;
   gap:4.5rem;align-items:flex-start;
   position:relative;z-index:5;
-  transform:translateX(160px);
+  transform:translateX(90px);
 
 }
 
@@ -155,7 +155,7 @@ iframe.yt-iframe{width:100%;aspect-ratio:16/7;display:block;border:none}
   cursor:pointer;
   flex-shrink:0;
   /* cada slot se monta sobre el anterior */
-  margin-left:-62px;
+  margin-left:-50px;
 }
 .slots-row .slot-wrap:first-child{margin-left:0}
 
@@ -628,10 +628,10 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
 
   /* Slots más pequeños en móvil para que no se solapen entre columnas */
   .slot-wrap img,
-  .slot-initials { height: 78px; }
-  .slot-initials  { width: 38px; }
-  /* Menor overlap negativo: solo las puntas se cruzan en el centro */
-  .slot-wrap { margin-left: -22px; }
+  .slot-initials { height: 60px; }
+  .slot-initials  { width: 28px; }
+  /* Overlap mayor para compactar el grupo y alejar del centro */
+  .slot-wrap { margin-left: -36px; }
   .slots-row .slot-wrap:first-child { margin-left: 0; }
 
   /* slots-row absolute dentro de su cat-group */
