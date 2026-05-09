@@ -328,19 +328,7 @@ function buildCard(eq) {
   });
   wrap.addEventListener('click', (e) => {
     e.stopPropagation();
-    const row   = wrap.closest('.slots-row');
-    const group = wrap.closest('.cat-group');
-    if (isTouch() && !row.classList.contains('expanded')) {
-      // primer tap: expandir grupo
-      collapseAll();
-      row.classList.add('expanded');
-      group.classList.add('expanded');
-      expandedGroup = row;
-    } else {
-      // desktop o grupo ya abierto: seleccionar
-      selectSlot(eq.slot);
-      if (isTouch()) collapseAll();
-    }
+    selectSlot(eq.slot);
   });
   return wrap;
 }

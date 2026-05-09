@@ -575,46 +575,58 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
 ══════════════════════════════════════════════════════════════ */
 @media(max-width:640px) {
 
-  /* Arena en columna: slots arriba, centro abajo */
+  /* FIX 3 & 4: arena-row como contenedor relativo de altura fija.
+     center-display y arena-cols-wrap serán hijos absolute. */
   .arena-row {
-    flex-direction: column;
+    position: relative;
+    flex-direction: row;       /* reset: hijos absolute, flex-dir no importa */
     align-items: stretch;
+    justify-content: stretch;
+    min-height: 370px;         /* altura suficiente para personaje + slots */
     gap: 0;
-    min-height: auto;
   }
 
-  /* Wrapper: grid 2 columnas ajustadas al ancho de pantalla */
+  /* FIX 2: Wrapper absolute que cubre toda la arena-row, encima del personaje.
+     pointer-events:none aquí para que clicks pasen al body, pero
+     las columnas restauran pointer-events:auto para los slots. */
   .arena-cols-wrap {
     display: grid !important;
     grid-template-columns: 1fr 1fr;
-    gap: .3rem;
-    width: 100%;
-    order: 1;
-    padding: 0 .3rem;
+    gap: 0;
+    position: absolute !important;
+    inset: 0;
+    z-index: 5;
+    padding: .5rem .3rem;
     box-sizing: border-box;
+    pointer-events: none;
   }
 
-  /* Columnas: flex column para apilar sus grupos */
+  /* FIX 2: Columnas — llenan el alto, distribuyen grupos arriba y abajo.
+     transform:none elimina el translateX(±90px) que las cortaba en móvil. */
   .arena-col-left,
   .arena-col-right {
     display: flex !important;
     flex-direction: column !important;
-    gap: .6rem;
+    justify-content: space-between;
+    height: 100%;
     position: relative;
     overflow: visible;
     min-width: 0;
+    transform: none !important;   /* reset desktop translateX */
+    pointer-events: auto;
+    gap: 0;
   }
   .arena-col-left  { align-items: flex-start !important; }
   .arena-col-right { align-items: flex-end !important;   }
 
-  /* Cat-group: altura fija reservada para que expandir no jale a los demás */
+  /* Cat-group */
   .cat-group {
     position: relative;
     min-height: calc(130px + 1.6rem);
     width: 100%;
   }
 
-  /* slots-row siempre absolute → no empuja nada */
+  /* slots-row absolute dentro de su cat-group */
   .slots-row {
     position: absolute;
     top: 0;
@@ -626,10 +638,11 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
     right: 0;
   }
 
-  /* Label fijo abajo del cat-group */
+  /* FIX 1 (parte A): Labels DEBAJO de sus slots — grupos 1 (ROBOT, NATURE) */
   .cat-label {
     position: absolute;
     bottom: 0;
+    top: auto;
     left: 0;
     cursor: pointer;
     font-size: .8rem;
@@ -639,19 +652,26 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
     left: auto;
     right: 0;
   }
-  .cat-label::before {
-    content: '▶ ';
-    font-size: .6rem;
-    opacity: .55;
+
+  /* FIX 5: Sin flecha de expansión — click selecciona directamente */
+  .cat-label::before { content: '' !important; }
+
+  /* FIX 1 (parte B): ANDROID (col-left grupo 2) y UNKNOWN (col-right grupo 2)
+     → label ARRIBA de sus slots */
+  .arena-col-left .cat-group:nth-child(2) .cat-label,
+  .arena-col-right .cat-group:nth-child(2) .cat-label {
+    top: 0;
+    bottom: auto;
   }
-  .cat-group.expanded .cat-label::before {
-    content: '▼ ';
+  /* Los slots de esos grupos bajan por debajo del label */
+  .arena-col-left .cat-group:nth-child(2) .slots-row,
+  .arena-col-right .cat-group:nth-child(2) .slots-row {
+    top: 1.6rem;
   }
 
-  /* Grupo expandido: flota sobre los demás */
-  .cat-group.expanded {
-    z-index: 50;
-  }
+  /* Estado expandido: se conserva el CSS por compatibilidad pero
+     ya no se activa (el click JS ahora selecciona directamente) */
+  .cat-group.expanded { z-index: 50; }
   .cat-group.expanded .slots-row {
     background: rgba(0,0,0,.92);
     border-radius: .5rem;
@@ -660,28 +680,32 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
     white-space: nowrap;
     z-index: 50;
   }
-  /* Derecha expandida: anclar a la derecha */
   .arena-col-right .cat-group.expanded .slots-row {
     left: auto;
     right: 0;
   }
 
-  /* Centro: altura fija, justo debajo de los slots */
+  /* FIX 3 & 4: Centro absolute, detrás de todo (z-index:0), cubre la arena-row.
+     El personaje aparece detrás de los slots, solapando arriba y abajo. */
   .center-display {
-    order: 2;
-    position: relative !important;
-    left: auto !important;
-    top: auto !important;
-    transform: none !important;
+    position: absolute !important;
+    left: 50% !important;
+    top: 0 !important;
+    transform: translateX(-50%) !important;
     width: 100% !important;
+    height: 100% !important;
     max-width: none !important;
-    height: 300px !important;
-    overflow: hidden !important;
+    z-index: 0;
     margin: 0 !important;
     border-radius: .5rem;
+    overflow: hidden !important;
+    order: initial;
   }
 
-  /* ops-bar y design-credit ya están dentro del center-display: OK */
+  /* FIX 6: Tablas apiladas verticalmente en móvil */
+  .bottom-split {
+    grid-template-columns: 1fr;
+  }
 }
 
 /* Wrapper invisible en desktop (display:contents no afecta layout) */
