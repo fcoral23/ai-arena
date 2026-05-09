@@ -352,6 +352,24 @@ function isMobile() {
   return window.matchMedia('(max-width:640px)').matches;
 }
 
+let pulsingStarted = false;
+
+function stopAllPulsing() {
+  if (!pulsingStarted) return;
+  document.querySelectorAll('.cat-label.pulsing').forEach(el => {
+    el.classList.remove('pulsing');
+  });
+  pulsingStarted = false;
+}
+
+function startPulsing() {
+  if (!isMobile()) return;
+  document.querySelectorAll('.cat-label').forEach(el => {
+    el.classList.add('pulsing');
+  });
+  pulsingStarted = true;
+}
+
 let activeMobGroup = null;
 
 function setMobActiveGroup(group) {
@@ -390,6 +408,7 @@ function renderCompetitors() {
     lbl.addEventListener('click', (e) => {
       if (!isMobile()) return;
       e.stopPropagation();
+      stopAllPulsing();
       setMobActiveGroup(group);
     });
 
@@ -549,6 +568,7 @@ loadData().then(() => {
   renderCompetitors();
   renderLeaderboard();
   renderDetailTable();
+  startPulsing();
 }).catch(err => {
   console.error('Error cargando datos:', err);
   document.body.innerHTML = '<p style="color:#FF4444;padding:2rem;font-family:monospace">Error cargando datos CSV. Verifica que data/config.csv y data/equipos.csv existen y el servidor está activo.</p>';

@@ -659,12 +659,27 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
   .cat-label {
     pointer-events: auto !important;
     z-index: 30;
+    /* Blanco tenue por defecto — apariencia "disponible, no activo" */
+    color: rgba(255,255,255,.55) !important;
+    text-shadow: none !important;
   }
 
-  /* Label del grupo activo: resaltado */
+  /* Parpadeo inicial: 0% → 100% opacidad, 2.4s, loop */
+  .cat-label.pulsing {
+    animation: labelPulse 2.4s ease-in-out infinite;
+  }
+  @keyframes labelPulse {
+    0%   { opacity: 0; }
+    50%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
+
+  /* Label del grupo activo: rojo */
   .cat-group.mob-active .cat-label {
-    color: #fff;
-    text-shadow: 0 0 10px var(--red-glow), 0 0 4px var(--red-glow);
+    color: #D42020 !important;
+    text-shadow: 0 0 8px rgba(212,32,32,.5) !important;
+    animation: none !important;
+    opacity: 1 !important;
   }
 
   /* slots-row absolute dentro de su cat-group */
