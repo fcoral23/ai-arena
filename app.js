@@ -166,7 +166,7 @@ function showSlot(slot) {
     clearTimeout(nameEl.hideTimer);
     nameEl.hideTimer = setTimeout(() => {
         nameEl.classList.remove('visible');
-    }, 1000);
+    }, 2000);
   }
 
 document.getElementById('choose-text').style.opacity='0';
@@ -382,6 +382,7 @@ function setMobActiveGroup(group) {
   } else {
     group.classList.add('mob-active');
     activeMobGroup = group;
+    playHoverSound();
   }
 }
 
