@@ -678,8 +678,6 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
   .cat-group.mob-active .cat-label {
     color: #D42020 !important;
     text-shadow: 0 0 8px rgba(212,32,32,.5) !important;
-    animation: none !important;
-    opacity: 1 !important;
   }
 
   /* slots-row absolute dentro de su cat-group */
