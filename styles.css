@@ -753,3 +753,63 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
 .arena-cols-wrap {
   display: contents;
 }
+
+/* ══════════════════════════════════════════════════════════════
+   MODAL DE BIENVENIDA
+══════════════════════════════════════════════════════════════ */
+body.modal-open { overflow: hidden; }
+
+#welcome-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 0, .88);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  animation: fadeInOverlay .4s ease;
+}
+
+#welcome-overlay.hiding {
+  animation: fadeOutOverlay .4s ease forwards;
+}
+
+@keyframes fadeInOverlay  { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fadeOutOverlay { from { opacity: 1 } to { opacity: 0 } }
+
+.welcome-modal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2.5rem 3rem;
+  border: 1px solid rgba(212, 32, 32, .4);
+  border-radius: 4px;
+  background: rgba(10, 10, 10, .7);
+  box-shadow: 0 0 40px rgba(212, 32, 32, .25), 0 0 80px rgba(0,0,0,.6);
+}
+
+.welcome-btn {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: clamp(1.1rem, 4vw, 1.6rem);
+  font-weight: 700;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+  color: #fff;
+  background: transparent;
+  border: 2px solid #D42020;
+  padding: .75em 2.2em;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: background .2s, color .2s, box-shadow .2s;
+  box-shadow: 0 0 12px rgba(212,32,32,.3);
+}
+
+.welcome-btn:hover,
+.welcome-btn:focus {
+  background: #D42020;
+  color: #000;
+  box-shadow: 0 0 24px rgba(212,32,32,.6);
+  outline: none;
+}

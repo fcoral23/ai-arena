@@ -94,16 +94,24 @@ async function loadData() {
    SOUND
 ══════════════════════════════════════════════════════════════ */
 let _ac = null;
-function playHoverSound() {
+
+function initAudio() {
+  if (_ac) return;
   try {
-    if (!_ac) _ac = new (window.AudioContext || window.webkitAudioContext)();
+    _ac = new (window.AudioContext || window.webkitAudioContext)();
+  } catch(e) {}
+}
+
+function playHoverSound() {
+  if (!_ac || _ac.state === 'suspended') return;
+  try {
     const o = _ac.createOscillator(), g = _ac.createGain();
     o.connect(g); g.connect(_ac.destination);
     o.type = 'triangle';
     o.frequency.setValueAtTime(660, _ac.currentTime);
     o.frequency.setValueAtTime(990, _ac.currentTime + .06);
     g.gain.setValueAtTime(0, _ac.currentTime);
-    g.gain.linearRampToValueAtTime(.12, _ac.currentTime + .02);
+    g.gain.linearRampToValueAtTime(.06, _ac.currentTime + .02);
     g.gain.exponentialRampToValueAtTime(.0001, _ac.currentTime + .22);
     o.start(_ac.currentTime); o.stop(_ac.currentTime + .22);
   } catch(e) {}
@@ -205,11 +213,6 @@ document.getElementById('choose-text').style.opacity='0';
 ══════════════════════════════════════════════════════════════ */
 function selectSlot(slot) {
   showSlot(slot);
-  // En móvil: cerrar el grupo activo tras seleccionar un slot
-  if (isMobile() && activeMobGroup) {
-    activeMobGroup.classList.remove('mob-active');
-    activeMobGroup = null;
-  }
 }
 
 
@@ -341,27 +344,6 @@ function buildCard(eq) {
 /* ══════════════════════════════════════════════════════════════
    RENDER: ARENA
 ══════════════════════════════════════════════════════════════ */
-function isMobile() {
-  return window.matchMedia('(max-width:640px)').matches;
-}
-
-let activeMobGroup = null;
-
-function setMobActiveGroup(group) {
-  // Desactivar grupo anterior
-  if (activeMobGroup && activeMobGroup !== group) {
-    activeMobGroup.classList.remove('mob-active');
-  }
-  // Activar nuevo grupo (toggle: click en el mismo lo cierra)
-  if (activeMobGroup === group) {
-    group.classList.remove('mob-active');
-    activeMobGroup = null;
-  } else {
-    group.classList.add('mob-active');
-    activeMobGroup = group;
-  }
-}
-
 function renderCompetitors() {
   DATA.equipos.forEach(e => { slotMap[e.slot] = e; });
 
@@ -381,14 +363,6 @@ function renderCompetitors() {
     const lbl = document.createElement('div');
     lbl.className   = 'cat-label';
     lbl.textContent = cat.label;
-
-    // En móvil: click en label activa/desactiva el grupo
-    lbl.addEventListener('click', (e) => {
-      if (!isMobile()) return;
-      e.stopPropagation();
-      setMobActiveGroup(group);
-    });
-
     group.appendChild(lbl);
     col.appendChild(group);
   });
@@ -510,15 +484,29 @@ window.deselect    = deselect;
 window.collapseAll = collapseAll;
 
 document.addEventListener('click', (e) => {
-  if (!e.target.closest('.arena-section')) {
-    collapseAll();
-    // En móvil: cerrar grupo activo si click fuera
-    if (isMobile() && activeMobGroup) {
-      activeMobGroup.classList.remove('mob-active');
-      activeMobGroup = null;
-    }
-  }
+  if (!e.target.closest('.arena-section')) collapseAll();
 });
+
+/* ── Modal de bienvenida ── */
+function showWelcomeModal() {
+  const overlay = document.createElement('div');
+  overlay.id = 'welcome-overlay';
+  overlay.innerHTML = `
+    <div class="welcome-modal">
+      <button class="welcome-btn" id="welcome-btn">Entrar a la Arena</button>
+    </div>`;
+  document.body.appendChild(overlay);
+  document.body.classList.add('modal-open');
+
+  document.getElementById('welcome-btn').addEventListener('click', () => {
+    initAudio();                          // gesto real → AudioContext desbloqueado
+    overlay.classList.add('hiding');
+    document.body.classList.remove('modal-open');
+    setTimeout(() => overlay.remove(), 400);
+  });
+}
+
+showWelcomeModal();
 
 loadData().then(() => {
   renderPage();
