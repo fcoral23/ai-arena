@@ -113,7 +113,6 @@ function playHoverSound() {
    STATE
 ══════════════════════════════════════════════════════════════ */
 let selectedSlot = null;
-let expandedGroup = null;
 const slotMap = {};
 
 /* ══════════════════════════════════════════════════════════════
@@ -292,15 +291,6 @@ document.querySelectorAll('.lb-entry').forEach(row => {
 /* ══════════════════════════════════════════════════════════════
    BUILD SLOT CARD
 ══════════════════════════════════════════════════════════════ */
-/* ══════════════════════════════════════════════════════════════
-   COLLAPSE ALL
-══════════════════════════════════════════════════════════════ */
-function collapseAll() {
-  document.querySelectorAll('.slots-row.expanded').forEach(r => r.classList.remove('expanded'));
-  document.querySelectorAll('.cat-group.expanded').forEach(g => g.classList.remove('expanded'));
-  expandedGroup = null;
-}
-
 function buildCard(eq) {
   const wrap = document.createElement('div');
   wrap.className    = 'slot-wrap';
@@ -318,18 +308,9 @@ function buildCard(eq) {
   };
 
   wrap.appendChild(img);
-  const isTouch = () => window.matchMedia('(hover:none)').matches;
-
-  wrap.addEventListener('mouseenter', () => {
-    if (!isTouch()) selectSlot(eq.slot);
-  });
-  wrap.addEventListener('mouseleave', () => {
-    if (!isTouch()) deselect();
-  });
-  wrap.addEventListener('click', (e) => {
-    e.stopPropagation();
-    selectSlot(eq.slot);
-  });
+  wrap.addEventListener('mouseenter', () => selectSlot(eq.slot));
+  wrap.addEventListener('mouseleave', deselect);
+  wrap.addEventListener('click', () => selectSlot(eq.slot));
   return wrap;
 }
 
@@ -471,13 +452,8 @@ function renderPage() {
 /* ══════════════════════════════════════════════════════════════
    INIT
 ══════════════════════════════════════════════════════════════ */
-window.selectSlot  = selectSlot;
-window.deselect    = deselect;
-window.collapseAll = collapseAll;
-
-document.addEventListener('click', (e) => {
-  if (!e.target.closest('.arena-section')) collapseAll();
-});
+window.selectSlot = selectSlot;
+window.deselect   = deselect;
 
 loadData().then(() => {
   renderPage();
