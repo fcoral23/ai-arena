@@ -575,6 +575,8 @@ footer{border-top:.5px solid var(--border);padding:1.5rem 0 2.5rem;text-align:ce
 ══════════════════════════════════════════════════════════════ */
 @media(max-width:640px) {
 
+  .info-strip { justify-content: flex-start; }
+
   /* FIX 3 & 4: arena-row como contenedor relativo de altura fija.
      center-display y arena-cols-wrap serán hijos absolute. */
   .arena-row {
