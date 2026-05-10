@@ -463,7 +463,7 @@ function renderLeaderboard() {
    Columnas de puntos vienen del CSV (entre disenador y total).
 ══════════════════════════════════════════════════════════════ */
 function renderDetailTable() {
-  const sorted = [...DATA.equipos].sort((a, b) => (a.equipo||'?').localeCompare((b.equipo||'?'), 'es'));
+  const sorted = [...DATA.equipos];
   const cols   = DATA.scoreColumns;
   const tbl    = document.getElementById('detail-table');
 
@@ -506,9 +506,10 @@ function renderPage() {
   document.getElementById('ft-org').textContent     = info.organizer || 'AI Arena';
 
   document.getElementById('info-strip').innerHTML = [
-    { label: 'Sede',     value: info.location },
-    { label: 'Horario',  value: info.time },
-    { label: 'Equipos',  value: equipos.length + ' participantes' },
+    { label: 'Sede',           value: info.location },
+    { label: 'Horario',        value: info.time },
+    { label: 'Particpantes',        value: equipos.length + ' equipos' },
+    { label: 'Acceso',         value: 'Entrada libre, sin registro previo. El aforo es limitado — te recomendamos llegar puntual. Ven y apoya a tu equipo.' },
   ].filter(c => c.value)
    .map(c => '<div class="info-chip"><div class="label">' + c.label + '</div><div class="value">' + c.value + '</div></div>')
    .join('');
