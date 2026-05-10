@@ -78,6 +78,7 @@ async function loadData() {
   const equipos = eqRows.map(r => ({
     slot:      parseInt(r.slot),
     nombre:    r.nombre,
+    equipo:    r.equipo,
     ia:        r.ia,
     op1:       r.op1,
     op2:       r.op2,
