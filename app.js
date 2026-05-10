@@ -428,7 +428,7 @@ function renderLeaderboard() {
   sorted.forEach((eq, i) => {
     const rank     = i + 1;
     const isFinal  = rank <= 4;
-    const initials = eq.nombre.split(/\s+/).map(w => w[0]).join('').substring(0, 2).toUpperCase();
+    const initials = (eq.equipo || '?').split(/\s+/).map(w => w[0]).join('').substring(0, 2).toUpperCase();
 
     const row = document.createElement('div');
     row.className = 'lb-entry' + (isFinal ? ' top4' : '');
@@ -444,7 +444,7 @@ function renderLeaderboard() {
         '<span style="display:none;width:100%;height:100%;align-items:center;justify-content:center">' + initials + '</span>' +
       '</div>' +
       '<div class="lb-info">' +
-        '<div class="lb-name">' + eq.nombre + '</div>' +
+        '<div class="lb-name">' + (eq.equipo || '?') + '</div>' +
         '<div class="lb-pts-label">pts</div>' +
       '</div>' +
       '<div><div class="lb-pts">' + eq.total.toLocaleString() + '</div></div>';
@@ -462,7 +462,7 @@ function renderLeaderboard() {
    Columnas de puntos vienen del CSV (entre disenador y total).
 ══════════════════════════════════════════════════════════════ */
 function renderDetailTable() {
-  const sorted = [...DATA.equipos].sort((a, b) => a.nombre.localeCompare(b.nombre, 'es'));
+  const sorted = [...DATA.equipos].sort((a, b) => (a.equipo||'?').localeCompare((b.equipo||'?'), 'es'));
   const cols   = DATA.scoreColumns;
   const tbl    = document.getElementById('detail-table');
 
@@ -474,7 +474,7 @@ function renderDetailTable() {
   sorted.forEach(eq => {
     const ia = IA[eq.ia] || DEF;
     body += '<tr class="data-row" data-slot="' + eq.slot + '">';
-    body += '<td>' + eq.nombre + '</td>';
+    body += '<td>' + (eq.equipo || '?') + '</td>';
     eq.scores.forEach(pts => {
       body += '<td class="pts-cell" style="color:' + ia.color + '">' + (pts !== null ? pts : '—') + '</td>';
     });
