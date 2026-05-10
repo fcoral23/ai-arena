@@ -36,7 +36,7 @@ header{padding:3rem 0 1.2rem;text-align:center}
 /* ── Info strip ── */
 .info-strip{display:flex;flex-wrap:wrap;gap:.8rem;justify-content:center;padding-bottom:2rem}
 .info-chip{background:var(--bg-card);border:.5px solid var(--border);border-radius:.5rem;padding:.65rem 1.1rem}
-.info-chip .label{color:#D42020;font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;font-family:'Rajdhani',sans-serif}
+.info-chip .label{color:#D42020;font-size:.7rem;text-transform:uppercase;letter-spacing:.15em;font-family:'Rajdhani',sans-serif;font-weight:700}
 .info-chip .value{color:var(--text);font-weight:500;font-size:.9rem}
 
 /* ── Section label ── */
