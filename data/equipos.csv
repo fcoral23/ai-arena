@@ -1,17 +1,17 @@
-﻿slot,equipo,nombre,ia,op1,op2,op3,disenador,E 1,E 2,E 3,E 4,E 5,R 1,R 2,R 3,R 4,total
-6,,,G,Fidel Rivera,Diego Ramírez ,Andrea Rodríguez ,Andrea Rodríguez ,3,,2,4,,,4,,,22
-1,,Jean Claude,A,Gregorio Cabrera ,Fernando Cuevas ,Juan Gómez,,3,3,1,3,,,14,,,23
-11,Los Bats,4to Bat,G,Ivana Carrillo Herrera,Joel Jared Pomar Quintal,Jose David Martín Izquierdo,Ivana Carrillo Herrera,3,3,2.5,9,2,,14,,,44
-14,,Claude.ia,A,Andrea Guevara González,Alexander Córdova Diaz ,Rodrigo Méndez,,3,3,1,8,,,8,,,38
-12,Mikrokosmos,Laika,G,Camila Alfaro ,Karen Chi ,Alejandra Molto,Karen Alondra Chi Ku,3,3,3,9,2,,7,,,45
-8,Claudio,Claudio Giovanna,A,César Hernández,Rebeca Castillo,Max,César Hernández,3,3,2,8,3,,7,,,40
-5,Mundi,Mundi,O,Mariana Moreno,Mariel Pedroza,Mariana Santana,Mariana Moreno,3,3,1,3,3,,15,,,23
-2,,,O,Andrés Quintal,Cristian Martinez,,,2,,1,3,,,2,,,15
-13,MAD R,Aura,G,Maria del Mar Vivas,Daniela Escalante,Rodrigo Polanco,Maria del Mar Vivas,3,3,2,9,3,,4,,,43
-9,,Atlas,O,Erick De Los Santos ,Jessica Garcia ,Erick Renteria ,,3,1.5,3,9,,,4,,,42
-10,,Gema,G,Mariana Martín,Fernanda Enríquez,Ezequiel Mex ,,3,1.5,2,9,,,15,,,40
-7,,Flori,O,Alejandra Macdonal ,Estefania Ring ,Yazmin Sanchez ,Yazmin Sanchez ,3,3,,7,,9,12,,,42
-3,Los bananos,Arturo,G,Rodrigo Reyes,Salmen Medina,Jeronimo Escalante,Rodrigo Reyes,3,,1,4,3,10,13,,,30
-15,Pookies,Mini,G,Barbara Aceves ,Ileana Perez,Magui Jimenez,Barbara Aceves ,1.5,3,0.5,6,3,,12,,,28
-16,Low Cortisol,,G,Iván Rada,Alan Bacelis,Juan Sánchez ,Iván Rada,1.5,,1,9,3,13,6,,,45
-4,,Novak,A,Ernesto Berny,Danna Ojeda,Leticia Espadas,Ernesto Berny,3,1.5,2,7,,,9,,,34
+﻿slot,equipo,nombre,ia,op1,op2,op3,disenador,E 1,E 2,E 3,E 4,E 5,R 1,R 2,R 3,total
+6,Eq. 1,?,G,Fidel Rivera,Diego Ramírez ,Andrea Rodríguez ,Andrea Rodríguez ,6,0,4,4,0,0,4,0,18
+1,Eq. 2,Jean Claude,A,Gregorio Cabrera ,Fernando Cuevas ,Juan Gómez,,6,6,2,3,0,0,14,14,45
+11,Los Bats,4to Bat,G,Ivana Carrillo Herrera,Joel Jared Pomar Quintal,Jose David Martín Izquierdo,Ivana Carrillo Herrera,6,6,5,9,2,0,14,15,57
+14,Eq. 4,Claude.ia,A,Andrea Guevara González,Alexander Córdova Diaz ,Rodrigo Méndez,Andrea Guevara,6,6,2,8,2,0,8,11,43
+12,Mikrokosmos,Laika,G,Camila Alfaro ,Karen Chi ,Alejandra Molto,Karen Alondra Chi Ku,6,6,6,9,2,0,7,1,37
+8,Claudio,Claudio Giovanna,A,César Hernández,Rebeca Castillo,Max,César Hernández,6,6,4,8,3,0,7,0,34
+5,Mundi,Mundi,O,Mariana Moreno,Mariel Pedroza,Mariana Santana,Mariana Moreno,6,6,2,3,3,0,15,0,35
+2,Eq. 8,?,O,Andrés Quintal,Cristian Martinez,,,4,0,2,3,0,0,2,0,11
+13,MAD R,Aura,G,Maria del Mar Vivas,Daniela Escalante,Rodrigo Polanco,Maria del Mar Vivas,6,6,4,9,3,0,4,1,33
+9,Eq. 10,Atlas,O,Erick De Los Santos ,Jessica Garcia ,Erick Renteria ,,6,3,6,9,0,0,4,4,32
+10,Eq. 11,Gema,G,Mariana Martín,Fernanda Enríquez,Ezequiel Mex ,,6,3,4,9,0,0,15,1,38
+7,Eq. 12,Flori,O,Alejandra Macdonal ,Estefania Ring ,Yazmin Sanchez ,Yazmin Sanchez ,6,6,0,7,0,9,12,3,43
+3,Los bananos,Arturo,G,Rodrigo Reyes,Salmen Medina,Jeronimo Escalante,Rodrigo Reyes,6,0,2,4,3,10,13,11,49
+15,Pookies,Mini,G,Barbara Aceves ,Ileana Perez,Magui Jimenez,Barbara Aceves ,3,6,1,6,3,0,12,3,34
+16,Low Cortisol,?,G,Iván Rada,Alan Bacelis,Juan Sánchez ,Iván Rada,3,0,2,9,3,13,6,6,42
+4,Eq. 16,Novak,A,Ernesto Berny,Danna Ojeda,Leticia Espadas,Ernesto Berny,6,3,4,7,0,0,9,1,30
