@@ -509,7 +509,7 @@ function renderPage() {
     { label: 'Sede',           value: info.location },
     { label: 'Horario',        value: info.time },
     { label: 'Particpantes',        value: equipos.length + ' equipos' },
-    { label: 'Acceso',         value: 'Entrada libre, sin registro previo. El aforo es limitado. ¡Ven y apoya a tu equipo!. Habrán sorteos al final' },
+    { label: 'Acceso',         value: 'Entrada libre, sin registro previo. El aforo es limitado. ¡Ven y apoya a tu equipo!. Habrán sorteos al final.' },
   ].filter(c => c.value)
    .map(c => '<div class="info-chip"><div class="label">' + c.label + '</div><div class="value">' + c.value + '</div></div>')
    .join('');
